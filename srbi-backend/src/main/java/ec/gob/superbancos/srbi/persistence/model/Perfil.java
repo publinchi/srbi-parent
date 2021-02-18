@@ -1,8 +1,6 @@
 package ec.gob.superbancos.srbi.persistence.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,6 +9,7 @@ public class Perfil implements Serializable {
 
     @Id
     @Column(name = "id_perfil")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long estado;
     private String nombre;

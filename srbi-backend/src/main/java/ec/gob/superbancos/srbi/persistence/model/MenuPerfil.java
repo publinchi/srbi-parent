@@ -4,15 +4,17 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity(name = "srbi_reporte")
-public class Reporte implements Serializable {
+@Entity(name = "srbi_menu_perfil")
+public class MenuPerfil implements Serializable {
 
     @Id
-    @Column(name = "id_reporte")
+    @Column(name = "id_menu_perfil")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String nombre;
-    private String ubicacion;
+    @Column(name = "id_menu")
+    private long idMenu;
+    @Column(name = "id_perfil")
+    private long idPerfil;
     private long estado;
     @Column(name = "id_usuario_creacion")
     private long idUsuarioCreacion;
@@ -31,20 +33,20 @@ public class Reporte implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public long getIdMenu() {
+        return idMenu;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setIdMenu(long idMenu) {
+        this.idMenu = idMenu;
     }
 
-    public String getUbicacion() {
-        return ubicacion;
+    public long getIdPerfil() {
+        return idPerfil;
     }
 
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
+    public void setIdPerfil(long idPerfil) {
+        this.idPerfil = idPerfil;
     }
 
     public long getEstado() {

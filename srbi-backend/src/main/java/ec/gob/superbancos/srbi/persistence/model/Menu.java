@@ -4,16 +4,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity(name = "srbi_reporte")
-public class Reporte implements Serializable {
+@Entity(name = "srbi_menu")
+public class Menu implements Serializable {
 
     @Id
-    @Column(name = "id_reporte")
+    @Column(name = "id_menu")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nombre;
-    private String ubicacion;
-    private long estado;
+    private long nivel;
     @Column(name = "id_usuario_creacion")
     private long idUsuarioCreacion;
     @Column(name = "fecha_creacion")
@@ -22,6 +21,8 @@ public class Reporte implements Serializable {
     private long idUsuarioModificacion;
     @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
+    private long estado;
+    private long id_menu_padre;
 
     public long getId() {
         return id;
@@ -39,20 +40,12 @@ public class Reporte implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getUbicacion() {
-        return ubicacion;
+    public long getNivel() {
+        return nivel;
     }
 
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
-    }
-
-    public long getEstado() {
-        return estado;
-    }
-
-    public void setEstado(long estado) {
-        this.estado = estado;
+    public void setNivel(long nivel) {
+        this.nivel = nivel;
     }
 
     public long getIdUsuarioCreacion() {
@@ -85,5 +78,21 @@ public class Reporte implements Serializable {
 
     public void setFechaModificacion(Date fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
+    }
+
+    public long getEstado() {
+        return estado;
+    }
+
+    public void setEstado(long estado) {
+        this.estado = estado;
+    }
+
+    public long getId_menu_padre() {
+        return id_menu_padre;
+    }
+
+    public void setId_menu_padre(long id_menu_padre) {
+        this.id_menu_padre = id_menu_padre;
     }
 }

@@ -4,15 +4,19 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity(name = "srbi_reporte")
-public class Reporte implements Serializable {
+@Entity(name = "srbi_notificacion")
+public class Notificacion implements Serializable {
 
     @Id
-    @Column(name = "id_reporte")
+    @Column(name = "id_notificacion")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String nombre;
-    private String ubicacion;
+    @Column(name = "id_tipo_notificacion")
+    private long idTipoNotificacion;
+    @Column(name = "id_usuario")
+    private long idUsuario;
+    @Column(name = "fecha_envio")
+    private Date fechaEnvio;
     private long estado;
     @Column(name = "id_usuario_creacion")
     private long idUsuarioCreacion;
@@ -22,6 +26,10 @@ public class Reporte implements Serializable {
     private long idUsuarioModificacion;
     @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
+    @Column(name = "tipo_notificacion_id_tipo_notificacion")
+    private String tipoNotificacionIdTipoNotificacion;
+    @Column(name = "usuario_id_usuario")
+    private String usuarioIdUsuario;
 
     public long getId() {
         return id;
@@ -31,20 +39,28 @@ public class Reporte implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public long getIdTipoNotificacion() {
+        return idTipoNotificacion;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setIdTipoNotificacion(long idTipoNotificacion) {
+        this.idTipoNotificacion = idTipoNotificacion;
     }
 
-    public String getUbicacion() {
-        return ubicacion;
+    public long getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setUbicacion(String ubicacion) {
-        this.ubicacion = ubicacion;
+    public void setIdUsuario(long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Date getFechaEnvio() {
+        return fechaEnvio;
+    }
+
+    public void setFechaEnvio(Date fechaEnvio) {
+        this.fechaEnvio = fechaEnvio;
     }
 
     public long getEstado() {
@@ -85,5 +101,21 @@ public class Reporte implements Serializable {
 
     public void setFechaModificacion(Date fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
+    }
+
+    public String getTipoNotificacionIdTipoNotificacion() {
+        return tipoNotificacionIdTipoNotificacion;
+    }
+
+    public void setTipoNotificacionIdTipoNotificacion(String tipoNotificacionIdTipoNotificacion) {
+        this.tipoNotificacionIdTipoNotificacion = tipoNotificacionIdTipoNotificacion;
+    }
+
+    public String getUsuarioIdUsuario() {
+        return usuarioIdUsuario;
+    }
+
+    public void setUsuarioIdUsuario(String usuarioIdUsuario) {
+        this.usuarioIdUsuario = usuarioIdUsuario;
     }
 }

@@ -1,8 +1,8 @@
 package ec.gob.superbancos.srbi.web.controller;
 
 import com.google.common.base.Preconditions;
-import ec.gob.superbancos.srbi.persistence.model.Perfil;
-import ec.gob.superbancos.srbi.persistence.service.IPerfilService;
+import ec.gob.superbancos.srbi.persistence.model.ReporteMenuPerfil;
+import ec.gob.superbancos.srbi.persistence.service.IReporteMenuPerfilService;
 import ec.gob.superbancos.srbi.web.exception.MyResourceNotFoundException;
 import ec.gob.superbancos.srbi.web.hateoas.event.PaginatedResultsRetrievedEvent;
 import ec.gob.superbancos.srbi.web.hateoas.event.ResourceCreatedEvent;
@@ -23,18 +23,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/perfiles")
-public class PerfilController {
+@RequestMapping(value = "/reportemenuperfiles")
+public class ReporteMenuPerfilController {
 
-    private static final Logger logger = LoggerFactory.getLogger(PerfilController.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReporteMenuPerfilController.class);
 
     @Autowired
     private ApplicationEventPublisher eventPublisher;
 
     @Autowired
-    private IPerfilService service;
+    private IReporteMenuPerfilService service;
 
-    public PerfilController() {
+    public ReporteMenuPerfilController() {
         super();
     }
 
@@ -55,9 +55,9 @@ public class PerfilController {
     // read - one
 
     @GetMapping(value = "/{id}")
-    public Perfil findById(@PathVariable("id") final Long id, final HttpServletResponse response) {
+    public ReporteMenuPerfil findById(@PathVariable("id") final Long id, final HttpServletResponse response) {
         try {
-            final Perfil resourceById = RestPreconditions.checkFound(service.findById(id));
+            final ReporteMenuPerfil resourceById = RestPreconditions.checkFound(service.findById(id));
 
             eventPublisher.publishEvent(new SingleResourceRetrievedEvent(this, response));
             return resourceById;
@@ -72,31 +72,31 @@ public class PerfilController {
     // read - all
 
     @GetMapping
-    public List<Perfil> findAll() {
+    public List<ReporteMenuPerfil> findAll() {
         return service.findAll();
     }
 
     @GetMapping(params = { "page", "size" })
-    public List<Perfil> findPaginated(@RequestParam("page") final int page, @RequestParam("size") final int size,
+    public List<ReporteMenuPerfil> findPaginated(@RequestParam("page") final int page, @RequestParam("size") final int size,
                                        final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        final Page<Perfil> resultPage = service.findPaginated(page, size);
+        final Page<ReporteMenuPerfil> resultPage = service.findPaginated(page, size);
         if (page > resultPage.getTotalPages()) {
             throw new MyResourceNotFoundException();
         }
-        eventPublisher.publishEvent(new PaginatedResultsRetrievedEvent<Perfil>(Perfil.class, uriBuilder, response, page,
+        eventPublisher.publishEvent(new PaginatedResultsRetrievedEvent<ReporteMenuPerfil>(ReporteMenuPerfil.class, uriBuilder, response, page,
                 resultPage.getTotalPages(), size));
 
         return resultPage.getContent();
     }
 
     @GetMapping("/pageable")
-    public List<Perfil> findPaginatedWithPageable(Pageable pageable, final UriComponentsBuilder uriBuilder,
+    public List<ReporteMenuPerfil> findPaginatedWithPageable(Pageable pageable, final UriComponentsBuilder uriBuilder,
                                                    final HttpServletResponse response) {
-        final Page<Perfil> resultPage = service.findPaginated(pageable);
+        final Page<ReporteMenuPerfil> resultPage = service.findPaginated(pageable);
         if (pageable.getPageNumber() > resultPage.getTotalPages()) {
             throw new MyResourceNotFoundException();
         }
-        eventPublisher.publishEvent(new PaginatedResultsRetrievedEvent<Perfil>(Perfil.class, uriBuilder, response,
+        eventPublisher.publishEvent(new PaginatedResultsRetrievedEvent<ReporteMenuPerfil>(ReporteMenuPerfil.class, uriBuilder, response,
                 pageable.getPageNumber(), resultPage.getTotalPages(), pageable.getPageSize()));
 
         return resultPage.getContent();
@@ -106,19 +106,19 @@ public class PerfilController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Perfil create(@RequestBody final Perfil resource, final HttpServletResponse response) {
+    public ReporteMenuPerfil create(@RequestBody final ReporteMenuPerfil resource, final HttpServletResponse response) {
         Preconditions.checkNotNull(resource);
-        final Perfil object = service.create(resource);
-        final Long idOfCreatedResource = object.getId();
+        final ReporteMenuPerfil foo = service.create(resource);
+        final Long idOfCreatedResource = foo.getId();
 
         eventPublisher.publishEvent(new ResourceCreatedEvent(this, response, idOfCreatedResource));
 
-        return object;
+        return foo;
     }
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") final Long id, @RequestBody final Perfil resource) {
+    public void update(@PathVariable("id") final Long id, @RequestBody final ReporteMenuPerfil resource) {
         Preconditions.checkNotNull(resource);
         RestPreconditions.checkFound(service.findById(resource.getId()));
         service.update(resource);

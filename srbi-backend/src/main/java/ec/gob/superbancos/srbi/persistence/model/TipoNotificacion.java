@@ -1,8 +1,6 @@
 package ec.gob.superbancos.srbi.persistence.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,6 +9,7 @@ public class TipoNotificacion implements Serializable {
 
     @Id
     @Column(name = "id_tipo_notificacion")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String titulo;
     private String contenido;
