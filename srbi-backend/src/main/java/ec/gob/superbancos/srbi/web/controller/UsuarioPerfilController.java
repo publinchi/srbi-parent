@@ -21,13 +21,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
-@RequestMapping(value = "/usuarios")
-public class UsuarioController {
+@RequestMapping(value = "/usuarioperfiles")
+public class UsuarioPerfilController {
 
-    private static final Logger logger = LoggerFactory.getLogger(UsuarioController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UsuarioPerfilController.class);
 
     @Autowired
     private ApplicationEventPublisher eventPublisher;
@@ -35,7 +34,7 @@ public class UsuarioController {
     @Autowired
     private IUsuarioService service;
 
-    public UsuarioController() {
+    public UsuarioPerfilController() {
         super();
     }
 
@@ -121,11 +120,8 @@ public class UsuarioController {
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") final Long id, @RequestBody final Usuario resource) {
         Preconditions.checkNotNull(resource);
-        if(Objects.equals(id, resource.getId())) {
-            RestPreconditions.checkFound(service.findById(resource.getId()));
-            service.update(resource);
-        } else
-            Preconditions.checkArgument(false);
+        RestPreconditions.checkFound(service.findById(resource.getId()));
+        service.update(resource);
     }
 
     @DeleteMapping(value = "/{id}")
