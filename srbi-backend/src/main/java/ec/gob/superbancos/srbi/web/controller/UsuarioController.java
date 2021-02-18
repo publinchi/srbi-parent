@@ -21,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping(value = "/usuarios")
@@ -120,8 +121,11 @@ public class UsuarioController {
     @ResponseStatus(HttpStatus.OK)
     public void update(@PathVariable("id") final Long id, @RequestBody final Usuario resource) {
         Preconditions.checkNotNull(resource);
-        RestPreconditions.checkFound(service.findById(resource.getId()));
-        service.update(resource);
+        if(Objects.equals(id, resource.getId())) {
+            RestPreconditions.checkFound(service.findById(resource.getId()));
+            service.update(resource);
+        } else
+            Preconditions.checkArgument(false);
     }
 
     @DeleteMapping(value = "/{id}")
