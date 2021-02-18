@@ -22,7 +22,8 @@ public class Menu implements Serializable {
     @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
     private long estado;
-    private long id_menu_padre;
+    @Column(name = "id_menu_padre")
+    private long idMenuPadre;
 
     public long getId() {
         return id;
@@ -88,11 +89,11 @@ public class Menu implements Serializable {
         this.estado = estado;
     }
 
-    public long getId_menu_padre() {
-        return id_menu_padre;
+    public long getIdMenuPadre() {
+        return idMenuPadre;
     }
 
-    public void setId_menu_padre(long id_menu_padre) {
-        this.id_menu_padre = id_menu_padre;
+    public void setIdMenuPadre(long idMenuPadre) {
+        this.idMenuPadre = idMenuPadre;
     }
 }
