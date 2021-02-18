@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/usuarios")
+@RequestMapping(value = "/usuarioperfiles")
 public class UsuarioPerfilController {
 
     private static final Logger logger = LoggerFactory.getLogger(UsuarioPerfilController.class);
