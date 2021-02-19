@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template.xhtml">
+
+    <ui:define name="title">
+        DataTable - <span class="subitem">Dynamic Columns</span>
+    </ui:define>
+
+    <ui:define name="description">
+        Columns of datatable can be created dynamically using the p:columns component.
+    </ui:define>
+
+    <ui:param name="documentationLink" value="/components/datatable"/>
+
+    <ui:define name="implementation">
+        <div class="card">
+            Available columns are "code","name","category" and "quantity".
+
+            <h:form id="form">
+                <h:panelGrid columns="3" style="margin:10px 0">
+                    <p:outputLabel for="template" value="Template:" style="font-weight:bold"/>
+                    <p:inputText id="template" value="#{dtColumnsView.columnTemplate}" size="50"/>
+                    <p:commandButton update="products" action="#{dtColumnsView.updateColumns}" value="Update"
+                                     process="@parent"
+                                     icon="pi pi-refresh" oncomplete="PF('productsTable').clearFilters()"/>
+                </h:panelGrid>
+
+                <p:dataTable id="products" var="product" value="#{dtColumnsView.products}" widgetVar="productsTable"
+                             filteredValue="#{dtColumnsView.filteredProducts}">
+                    <p:columns value="#{dtColumnsView.columns}" var="column" columnIndexVar="colIndex"
+                               sortBy="#{product[column.property]}" filterBy="#{product[column.property]}">
+                        <f:facet name="header">
+                            <h:outputText value="#{column.header}"/>
+                        </f:facet>
+                        <h:outputText value="#{product[column.property]}"/>
+                    </p:columns>
+                </p:dataTable>
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

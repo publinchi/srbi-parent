@@ -1,0 +1,171 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        ADMINISTRACIÓN USUARIOS - <span class="subitem">Usuario</span>
+    </ui:define>
+
+    <ui:define name="description">
+        <!--This example demonstrates a simple but common usage of posting the form, updating the backend value and displaying the output with ajax.-->
+    </ui:define>
+
+    <ui:define name="implementation">
+        <h:form id="form">
+            <div class="card crud-demo">
+                <p:growl id="messages" showDetail="true"/>
+
+                <div class="products-buttonbar">
+                    <div>
+                        <p:commandButton value="Nuevo" icon="pi pi-plus" actionListener="#{usuarioCrudView.openNew}"
+                                         update="manage-usuario-content" oncomplete="PF('manageUsuarioDialog').show()"
+                                         styleClass="success-button" style="margin-right: .5rem"/>
+                        <p:commandButton id="delete-products-button" value="#{usuarioCrudView.deleteButtonMessage}"
+                                         icon="pi pi-trash" actionListener="#{usuarioCrudView.deleteSelectedUsuarios}"
+                                         styleClass="danger-button" disabled="#{!usuarioCrudView.hasSelectedUsuarios()}"
+                                         update="@this">
+                            <p:confirm header="Confirmación" message="Eliminar el usuario seleccionado?"
+                                       icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+                    </div>
+                    <div>
+                        <p:fileUpload mode="simple" skinSimple="true" label="Import" chooseIcon="pi pi-download"
+                                      class="info-button"/>
+                        <p:commandButton value="Export" icon="pi pi-upload" styleClass="help-button" ajax="false">
+                            <p:dataExporter type="pdf" target="dt-usuarios" fileName="products"/>
+                        </p:commandButton>
+                    </div>
+                </div>
+
+                <p:dataTable id="dt-usuarios" widgetVar="dtUsuarios" var="usuario" value="#{usuarioCrudView.usuarios}"
+                             reflow="true" styleClass="products-table"
+                             selection="#{usuarioCrudView.selectedUsuarios}" rowKey="#{usuario.id}" paginator="true"
+                             rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">USUARIOS</span>
+
+                            <span class="filter-container ui-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtUsuarios').filter()" placeholder="Search"/>
+                    </span>
+
+                        </div>
+                    </f:facet>
+
+                    <p:ajax event="rowSelect" update=":form:delete-products-button"/>
+                    <p:ajax event="rowUnselect" update=":form:delete-products-button"/>
+                    <p:ajax event="rowSelectCheckbox" update=":form:delete-products-button"/>
+                    <p:ajax event="rowUnselectCheckbox" update=":form:delete-products-button"/>
+                    <p:ajax event="toggleSelect" update=":form:delete-products-button"/>
+
+                    <p:column selectionMode="multiple" exportable="false"></p:column>
+
+                    <p:column headerText="Id" sortBy="#{usuario.id}" filterBy="#{usuario.id}">
+                        <h:outputText value="#{usuario.id}"/>
+                    </p:column>
+                    <p:column headerText="Login" sortBy="#{usuario.login}" filterBy="#{usuario.login}">
+                        <h:outputText value="#{usuario.login}"/>
+                    </p:column>
+                    <p:column headerText="U. Creación" sortBy="#{usuario.idUsuarioCreacion}"
+                              filterBy="#{usuario.idUsuarioCreacion}">
+                        <h:outputText value="#{usuario.idUsuarioCreacion}"/>
+                    </p:column>
+                    <p:column headerText="F. Creación" sortBy="#{usuario.fechaCreacion}"
+                              filterBy="#{usuario.fechaCreacion}">
+                        <h:outputText value="#{usuario.fechaCreacion}"/>
+                    </p:column>
+                    <p:column headerText="U. Modificación" sortBy="#{usuario.idUsuarioModificacion}"
+                              filterBy="#{usuario.idUsuarioModificacion}">
+                        <h:outputText value="#{usuario.idUsuarioModificacion}"/>
+                    </p:column>
+                    <p:column headerText="F. Modificación" sortBy="#{usuario.fechaModificacion}"
+                              filterBy="#{usuario.fechaModificacion}">
+                        <h:outputText value="#{usuario.fechaModificacion}"/>
+                    </p:column>
+                    <p:column headerText="Intentos" sortBy="#{usuario.intento}"
+                              filterBy="#{usuario.intento}">
+                        <h:outputText value="#{usuario.intento}"/>
+                    </p:column>
+                    <p:column headerText="Ip" sortBy="#{usuario.ip}"
+                              filterBy="#{usuario.ip}">
+                        <h:outputText value="#{usuario.ip}"/>
+                    </p:column>
+                    <p:column headerText="Estado" sortBy="#{usuario.estado}"
+                              filterBy="#{usuario.estado}">
+                        <h:outputText value="#{usuario.estado}"/>
+                    </p:column>
+                    <p:column headerText="Departamento" sortBy="#{usuario.idDepartamento}"
+                              filterBy="#{usuario.idDepartamento}">
+                        <h:outputText value="#{usuario.idDepartamento}"/>
+                    </p:column>
+                    <p:column headerText="Correo" sortBy="#{usuario.correoEmpresarial}"
+                              filterBy="#{usuario.correoEmpresarial}">
+                        <h:outputText value="#{usuario.correoEmpresarial}"/>
+                    </p:column>
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil" update=":form:manage-usuario-content"
+                                         oncomplete="PF('manageUsuarioDialog').show()"
+                                         styleClass="edit-button rounded-button success-button" process="@this">
+                            <f:setPropertyActionListener value="#{usuario}" target="#{usuarioCrudView.selectedUsuario}"/>
+                        </p:commandButton>
+                        <p:commandButton class="warning-button rounded-button" icon="pi pi-trash" process="@this"
+                                         oncomplete="PF('deleteUsuarioDialog').show()">
+                            <f:setPropertyActionListener value="#{usuario}" target="#{usuarioCrudView.selectedUsuario}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:dialog header="Detalles Usuario" width="450" showEffect="fade" modal="true"
+                          widgetVar="manageUsuarioDialog" responsive="true">
+                    <p:outputPanel id="manage-usuario-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty usuarioCrudView.selectedUsuario}">
+                            <div class="p-field">
+                                <p:outputLabel for="login">Login</p:outputLabel>
+                                <p:inputText id="login" value="#{usuarioCrudView.selectedUsuario.login}" required="true"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="ip">IP</p:outputLabel>
+                                <p:inputText id="ip" value="#{usuarioCrudView.selectedUsuario.ip}" required="true"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="contrasenia">Contraseña</p:outputLabel>
+                                <p:password id="contrasenia" value="#{usuarioCrudView.selectedUsuario.contrasenia}" required="true"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="correo">Correo Empresarial</p:outputLabel>
+                                <p:inputText id="correo" value="#{usuarioCrudView.selectedUsuario.correoEmpresarial}" required="true"/>
+                            </div>
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{usuarioCrudView.save}"
+                                         update="manage-usuario-content" process="manage-usuario-content @this"/>
+                        <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageUsuarioDialog').hide()"
+                                         class="secondary-button"/>
+                    </f:facet>
+                </p:dialog>
+
+                <p:confirmDialog widgetVar="deleteUsuarioDialog" showEffect="fade" width="300"
+                                 message="Eliminar el usuario?" header="Confirmación" severity="warn">
+                    <p:commandButton value="Si" icon="pi pi-check" actionListener="#{usuarioCrudView.delete}"
+                                     process="@this" oncomplete="PF('deleteUsuarioDialog').hide()"/>
+                    <p:commandButton value="No" type="button" styleClass="secondary-button" icon="pi pi-times"
+                                     onclick="PF('deleteUsuarioDialog').hide()"/>
+                </p:confirmDialog>
+
+                <p:confirmDialog global="true" showEffect="fade" width="300">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no secondary-button"
+                                     icon="pi pi-times"/>
+                </p:confirmDialog>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

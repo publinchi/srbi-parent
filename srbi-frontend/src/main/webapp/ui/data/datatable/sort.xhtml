@@ -1,0 +1,112 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template.xhtml">
+
+    <ui:define name="title">
+        DataTable - <span class="subitem">Sort</span>
+    </ui:define>
+
+    <ui:define name="description">
+        Sorting is enabled with sortBy expressions. Both single and multiple column sorting are supported.
+    </ui:define>
+
+    <ui:param name="documentationLink" value="/components/datatable"/>
+
+    <ui:define name="head">
+        <style type="text/css">
+            .ui-datatable input {
+                box-sizing: border-box;
+                width: 100%;
+                -webkit-box-shadow: none;
+                box-shadow: none !important;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="implementation">
+
+        <h:form>
+            <div class="card">
+                <h5>Single Column</h5>
+
+                <p:dataTable var="product" value="#{dtSortView.products1}" style="margin-bottom:40px">
+                    <p:column headerText="Code" sortBy="#{product.code}">
+                        <h:outputText value="#{product.code}"/>
+                    </p:column>
+
+                    <p:column headerText="Name" sortBy="#{product.name}">
+                        <h:outputText value="#{product.name}"/>
+                    </p:column>
+
+                    <p:column headerText="Category" sortBy="#{product.category}">
+                        <h:outputText value="#{product.category}"/>
+                    </p:column>
+
+                    <p:column headerText="Quantitiy" sortBy="#{product.quantity}">
+                        <h:outputText value="#{product.quantity}"/>
+                    </p:column>
+
+                    <p:column headerText="Price" sortBy="#{product.price}">
+                        <h:outputText value="$#{product.price}"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+            <div class="card">
+                <h5>Editable Values</h5>
+
+                <p:dataTable var="product" value="#{dtSortView.products2}" style="margin-bottom:40px">
+                    <p:ajax event="sort" skipChildren="false"/>
+                    <p:column headerText="Code" sortBy="#{product.code}">
+                        <p:inputText value="#{product.code}"/>
+                    </p:column>
+
+                    <p:column headerText="Name" sortBy="#{product.name}">
+                        <p:inputText value="#{product.name}"/>
+                    </p:column>
+
+                    <p:column headerText="Category" sortBy="#{product.category}">
+                        <p:inputText value="#{product.category}"/>
+                    </p:column>
+
+                    <p:column headerText="Quantitiy" sortBy="#{product.quantity}">
+                        <p:inputText value="#{product.quantity}"/>
+                    </p:column>
+
+                    <p:column headerText="Price" sortBy="#{product.price}">
+                        <h:outputText value="$#{product.price}"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+            <div class="card">
+                <h5>Multiple Columns</h5>
+                <p>Use metakey to add a column to the sort selection.</p>
+
+                <p:dataTable var="product" value="#{dtSortView.products3}" sortMode="multiple">
+                    <p:column headerText="Code" sortBy="#{product.code}">
+                        <h:outputText value="#{product.code}"/>
+                    </p:column>
+
+                    <p:column headerText="Name" sortBy="#{product.name}">
+                        <h:outputText value="#{product.name}"/>
+                    </p:column>
+
+                    <p:column headerText="Category" sortBy="#{product.category}">
+                        <h:outputText value="#{product.category}"/>
+                    </p:column>
+
+                    <p:column headerText="Quantitiy" sortBy="#{product.quantity}">
+                        <h:outputText value="#{product.quantity}"/>
+                    </p:column>
+
+                    <p:column headerText="Price" sortBy="#{product.price}">
+                        <h:outputText value="$#{product.price}"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

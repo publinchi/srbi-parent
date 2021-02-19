@@ -1,0 +1,150 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        AccordionPanel
+    </ui:define>
+
+    <ui:define name="description">
+        AccordionPanel is a container component with vertically stacked panels.
+    </ui:define>
+
+    <ui:param name="documentationLink" value="/components/accordionpanel"/>
+
+    <ui:define name="implementation">
+
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true"/>
+
+            <div class="card">
+                <h5 style="margin-top:0">Basic</h5>
+                <p:accordionPanel>
+                    <p:tab title="Header I">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText
+                                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Header II">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText
+                                    value="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi."/>
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Header III">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText
+                                    value="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus."/>
+                        </h:panelGrid>
+                    </p:tab>
+                </p:accordionPanel>
+            </div>
+
+            <div class="card">
+                <h5>Multiple Selection</h5>
+                <p:accordionPanel multiple="true">
+                    <p:tab title="Header I">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText
+                                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Header II">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText
+                                    value="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi."/>
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Header III">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText
+                                    value="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus."/>
+                        </h:panelGrid>
+                    </p:tab>
+                </p:accordionPanel>
+            </div>
+
+            <div class="card">
+                <h5>On-Demand Loading</h5>
+                <p:accordionPanel dynamic="true" cache="true">
+                    <p:tab title="Header I">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText
+                                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Header II">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText
+                                    value="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi."/>
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Header III">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText
+                                    value="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus."/>
+                        </h:panelGrid>
+                    </p:tab>
+                </p:accordionPanel>
+            </div>
+
+            <div class="card">
+                <h5>Change Event</h5>
+                <p:accordionPanel>
+                    <p:ajax event="tabChange" listener="#{tabbedView.onTabChange}" update=":form:msgs"/>
+                    <p:ajax event="tabClose" listener="#{tabbedView.onTabClose}" update=":form:msgs"/>
+
+                    <p:tab title="Header I">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText
+                                    value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."/>
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Header II">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText
+                                    value="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi."/>
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="Header III">
+                        <h:panelGrid columns="2" cellpadding="10">
+                            <h:outputText
+                                    value="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus."/>
+                        </h:panelGrid>
+                    </p:tab>
+                </p:accordionPanel>
+            </div>
+
+            <div class="card">
+                <h5>DataModel</h5>
+                <p:accordionPanel value="#{tabbedView.products}" var="product">
+                    <p:tab title="Product - #{product.name}">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <f:facet name="header">
+                                <p:graphicImage name="demo/images/product/#{product.image}"/>
+                            </f:facet>
+                            <h:outputText value="Code:" style="font-weight: bold"/>
+                            <h:outputText value="#{product.code}"/>
+
+                            <h:outputText value="Name:" style="font-weight: bold"/>
+                            <h:outputText value="#{product.name}"/>
+
+                            <h:outputText value="Category:" style="font-weight: bold"/>
+                            <h:outputText value="#{product.category}"/>
+
+                            <h:outputText value="Quantity:" style="font-weight: bold"/>
+                            <h:outputText value="#{product.quantity}"/>
+                        </h:panelGrid>
+                    </p:tab>
+                </p:accordionPanel>
+            </div>
+
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
