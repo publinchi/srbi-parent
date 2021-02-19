@@ -11,6 +11,7 @@
     <modules>
         <module>srbi-backend</module>
         <module>srbi-frontend</module>
+        <module>srbi-entity</module>
     </modules>
 
     <dependencyManagement>

@@ -1,0 +1,56 @@
+/*
+ * Copyright 2009-2014 PrimeTek.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.primefaces.showcase.view.data.datatable;
+
+import javax.faces.view.ViewScoped;
+import org.primefaces.showcase.domain.Customer;
+import org.primefaces.showcase.service.CustomerService;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+@Named("dtRowGroupView")
+@ViewScoped
+public class RowGroupView implements Serializable {
+    
+    private List<Customer> customers;
+    
+    @Inject
+    private CustomerService service;
+
+    @PostConstruct
+    public void init() {
+        customers = service.getCustomers(50);
+    }
+
+    public long getTotalCount(String name) {
+        return customers.stream().filter(customers -> name.equals(customers.representative.name)).count();
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
+    }
+
+    public void setService(CustomerService service) {
+        this.service = service;
+    }
+
+}

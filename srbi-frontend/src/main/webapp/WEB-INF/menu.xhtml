@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:sc="http://primefaces.org/ui/showcase">
+
+    <div class="layout-sidebar" role="navigation">
+        <div class="search-input">
+            <i class="pi pi-search icon-search"/>
+            <input id="searchInput" type="text" placeholder="Search..." aria-label="Search input"/>
+        </div>
+
+        <sc:menu>
+            <p:submenu id="sc_admin_user" label="Administración usuarios" icon="pi pi-bookmark">
+                <p:menuitem id="sc_usuario" value="Usuario" outcome="/ui/admin/usuario"/>
+                <p:menuitem id="sc_srbi_menu" value="Menú" outcome="/ui/ajax/listener"/>
+                <p:menuitem id="sc_reporte" value="Reporte" outcome="/ui/ajax/listener"/>
+                <p:submenu id="sc_perfil" label="Perfil" icon="pi pi-bookmark">
+                    <p:menuitem id="sc_reporte_perfil" value="Asignación reporte a perfil" outcome="/ui/ajax/listener"/>
+                    <p:menuitem id="sc_perfil_menu" value="Asignación de perfil a menú" outcome="/ui/ajax/listener"/>
+                    <p:menuitem id="sc_perfil_usuario" value="Asignación perfil a usuario" outcome="/ui/ajax/listener"/>
+                </p:submenu>
+            </p:submenu>
+            <p:submenu id="sc_reportes" label="Reportes" icon="pi pi-bookmark">
+            </p:submenu>
+        </sc:menu>
+    </div>
+</ui:composition>

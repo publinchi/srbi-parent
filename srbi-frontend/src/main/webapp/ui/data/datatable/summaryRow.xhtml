@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="./template.xhtml">
+
+    <ui:define name="title">
+        DataTable - <span class="subitem">SummaryRow</span>
+    </ui:define>
+
+    <ui:define name="description">
+        SummaryRow is a helper component of datatable used for dynamic grouping.
+    </ui:define>
+
+    <ui:param name="documentationLink" value="/components/datatable"/>
+
+    <ui:define name="implementation">
+        <div class="card">
+            <h:form>
+                <p:dataTable var="product" value="#{dtSummaryRowView.products}" sortBy="#{product.category}">
+                    <p:column headerText="Code" sortBy="#{product.code}">
+                        <h:outputText value="#{product.code}"/>
+                    </p:column>
+                    <p:column headerText="Name" sortBy="#{product.name}">
+                        <h:outputText value="#{product.name}"/>
+                    </p:column>
+                    <p:column headerText="Category" sortBy="#{product.category}">
+                        <h:outputText value="#{product.category}"/>
+                    </p:column>
+                    <p:column headerText="Quantitiy" sortBy="#{product.quantity}">
+                        <h:outputText value="#{product.quantity}"/>
+                    </p:column>
+                    <p:summaryRow>
+                        <p:column colspan="3" style="text-align:right">
+                            <h:outputText value="Total:"/>
+                        </p:column>
+                        <p:column>
+                            <h:outputText value="#{dtSummaryRowView.randomPrice}">
+                                <f:convertNumber type="currency" currencySymbol="$"/>
+                            </h:outputText>
+                        </p:column>
+                    </p:summaryRow>
+                </p:dataTable>
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

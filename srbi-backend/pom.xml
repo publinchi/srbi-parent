@@ -13,6 +13,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>ec.gob.superbancos.srbi</groupId>
+            <version>1.0.0</version>
+            <artifactId>srbi-entity</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>

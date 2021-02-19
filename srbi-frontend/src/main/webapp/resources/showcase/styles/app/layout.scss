@@ -1,0 +1,28 @@
+@charset 'UTF-8';
+
+:root {
+    --surface-a: #ffffff;
+    --surface-b: #f8f9fa;
+    --surface-c: #e9ecef;
+    --surface-d: #dee2e6;
+    --surface-e: #ffffff;
+    --surface-f: #ffffff;
+    --text-color: #495057;
+    --text-color-secondary: #6c757d;
+    --primary-color: #2196F3;
+    --primary-color-text: #ffffff;
+    --font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+}
+
+@import './_core';
+@import './_topbar';
+@import './_sidebar';
+@import './_content';
+@import './_news';
+@import './_footer';
+@import './_config';
+@import './_home';
+@import './_responsive';
+@import './_demo';
+@import './changelog';
+
