@@ -125,7 +125,7 @@ public class UsuarioController {
             RestPreconditions.checkFound(service.findById(resource.getId()));
             service.update(resource);
         } else
-            Preconditions.checkArgument(false);
+            RestPreconditions.checkFound(false);
     }
 
     @DeleteMapping(value = "/{id}")
