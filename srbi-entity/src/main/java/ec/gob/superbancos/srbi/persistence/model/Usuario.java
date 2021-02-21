@@ -147,4 +147,26 @@ public class Usuario implements Serializable {
     public void setCorreoEmpresarial(String correoEmpresarial) {
         this.correoEmpresarial = correoEmpresarial;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == 0) ? 0 : Long.valueOf(id).hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Usuario other = (Usuario) obj;
+        if (id == 0) {
+            return other.id == 0;
+        } else return id == other.id;
+    }
 }
