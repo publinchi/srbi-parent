@@ -1,5 +1,7 @@
 package ec.gob.superbancos.srbi.persistence.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -18,10 +20,12 @@ public class ReporteMenuPerfil implements Serializable {
     private long estado;
     @Column(name = "id_usuario_creacion")
     private long idUsuarioCreacion;
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Column(name = "fecha_creacion")
     private Date fechaCreacion;
     @Column(name = "id_usuario_modificacion")
     private long idUsuarioModificacion;
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSSX")
     @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
 
@@ -88,4 +92,27 @@ public class ReporteMenuPerfil implements Serializable {
     public void setFechaModificacion(Date fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == 0) ? 0 : Long.valueOf(id).hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ReporteMenuPerfil other = (ReporteMenuPerfil) obj;
+        if (id == 0) {
+            return other.id == 0;
+        } else return id == other.id;
+    }
+
 }
