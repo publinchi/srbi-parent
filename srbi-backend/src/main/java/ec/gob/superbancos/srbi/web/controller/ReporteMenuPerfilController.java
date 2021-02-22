@@ -79,7 +79,7 @@ public class ReporteMenuPerfilController {
 
     @GetMapping(params = { "page", "size" })
     public List<ReporteMenuPerfil> findPaginated(@RequestParam("page") final int page, @RequestParam("size") final int size,
-                                       final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
+                                                 final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
         final Page<ReporteMenuPerfil> resultPage = service.findPaginated(page, size);
         if (page > resultPage.getTotalPages()) {
             throw new MyResourceNotFoundException();
@@ -92,7 +92,7 @@ public class ReporteMenuPerfilController {
 
     @GetMapping("/pageable")
     public List<ReporteMenuPerfil> findPaginatedWithPageable(Pageable pageable, final UriComponentsBuilder uriBuilder,
-                                                   final HttpServletResponse response) {
+                                                             final HttpServletResponse response) {
         final Page<ReporteMenuPerfil> resultPage = service.findPaginated(pageable);
         if (pageable.getPageNumber() > resultPage.getTotalPages()) {
             throw new MyResourceNotFoundException();
@@ -125,7 +125,7 @@ public class ReporteMenuPerfilController {
             RestPreconditions.checkFound(service.findById(resource.getId()));
             service.update(resource);
         } else
-            Preconditions.checkArgument(false);
+            RestPreconditions.checkFound(false);
     }
 
     @DeleteMapping(value = "/{id}")

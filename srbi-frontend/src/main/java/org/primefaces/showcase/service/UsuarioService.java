@@ -29,7 +29,7 @@ public class UsuarioService {
     }
 
     public List<Usuario> getUsuarios() {
-        return new ArrayList<>(usuarios);
+        return findAll();
     }
 
     public List<Usuario> getProducts(int size) {

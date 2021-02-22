@@ -21,21 +21,14 @@
                 <div class="products-buttonbar">
                     <div>
                         <p:commandButton value="Nuevo" icon="pi pi-plus" actionListener="#{usuarioCrudView.openNew}"
-                                         update="manage-usuario-content" oncomplete="PF('manageUsuarioDialog').show()"
+                                         update=":form:manage-usuario-content" oncomplete="PF('manageUsuarioDialog').show()"
                                          styleClass="success-button" style="margin-right: .5rem"/>
-                        <p:commandButton id="delete-products-button" value="#{usuarioCrudView.deleteButtonMessage}"
+                        <p:commandButton id="delete-usuarios-button" value="#{usuarioCrudView.deleteButtonMessage}"
                                          icon="pi pi-trash" actionListener="#{usuarioCrudView.deleteSelectedUsuarios}"
                                          styleClass="danger-button" disabled="#{!usuarioCrudView.hasSelectedUsuarios()}"
                                          update="@this">
                             <p:confirm header="Confirmación" message="Eliminar el usuario seleccionado?"
                                        icon="pi pi-exclamation-triangle"/>
-                        </p:commandButton>
-                    </div>
-                    <div>
-                        <p:fileUpload mode="simple" skinSimple="true" label="Import" chooseIcon="pi pi-download"
-                                      class="info-button"/>
-                        <p:commandButton value="Export" icon="pi pi-upload" styleClass="help-button" ajax="false">
-                            <p:dataExporter type="pdf" target="dt-usuarios" fileName="products"/>
                         </p:commandButton>
                     </div>
                 </div>
@@ -56,11 +49,11 @@
                         </div>
                     </f:facet>
 
-                    <p:ajax event="rowSelect" update=":form:delete-products-button"/>
-                    <p:ajax event="rowUnselect" update=":form:delete-products-button"/>
-                    <p:ajax event="rowSelectCheckbox" update=":form:delete-products-button"/>
-                    <p:ajax event="rowUnselectCheckbox" update=":form:delete-products-button"/>
-                    <p:ajax event="toggleSelect" update=":form:delete-products-button"/>
+                    <p:ajax event="rowSelect" update=":form:delete-usuarios-button"/>
+                    <p:ajax event="rowUnselect" update=":form:delete-usuarios-button"/>
+                    <p:ajax event="rowSelectCheckbox" update=":form:delete-usuarios-button"/>
+                    <p:ajax event="rowUnselectCheckbox" update=":form:delete-usuarios-button"/>
+                    <p:ajax event="toggleSelect" update=":form:delete-usuarios-button"/>
 
                     <p:column selectionMode="multiple" exportable="false"></p:column>
 
@@ -129,14 +122,6 @@
                                 <p:inputText id="login" value="#{usuarioCrudView.selectedUsuario.login}" required="true"/>
                             </div>
                             <div class="p-field">
-                                <p:outputLabel for="ip">IP</p:outputLabel>
-                                <p:inputText id="ip" value="#{usuarioCrudView.selectedUsuario.ip}" required="true"/>
-                            </div>
-                            <div class="p-field">
-                                <p:outputLabel for="contrasenia">Contraseña</p:outputLabel>
-                                <p:password id="contrasenia" value="#{usuarioCrudView.selectedUsuario.contrasenia}" required="true"/>
-                            </div>
-                            <div class="p-field">
                                 <p:outputLabel for="correo">Correo Empresarial</p:outputLabel>
                                 <p:inputText id="correo" value="#{usuarioCrudView.selectedUsuario.correoEmpresarial}" required="true"/>
                             </div>
@@ -154,7 +139,8 @@
                 <p:confirmDialog widgetVar="deleteUsuarioDialog" showEffect="fade" width="300"
                                  message="Eliminar el usuario?" header="Confirmación" severity="warn">
                     <p:commandButton value="Si" icon="pi pi-check" actionListener="#{usuarioCrudView.delete}"
-                                     process="@this" oncomplete="PF('deleteUsuarioDialog').hide()"/>
+                                     process="@this" oncomplete="PF('deleteUsuarioDialog').hide()"
+                                     update=":form:delete-usuarios-button"/>
                     <p:commandButton value="No" type="button" styleClass="secondary-button" icon="pi pi-times"
                                      onclick="PF('deleteUsuarioDialog').hide()"/>
                 </p:confirmDialog>

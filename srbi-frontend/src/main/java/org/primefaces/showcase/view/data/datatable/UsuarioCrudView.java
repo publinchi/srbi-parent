@@ -11,7 +11,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -61,6 +60,8 @@ public class UsuarioCrudView implements Serializable {
     public void save() {
         if (this.selectedUsuario.getId() <= 0) {
             this.selectedUsuario.setFechaCreacion(Calendar.getInstance().getTime());
+            this.selectedUsuario.setIp("");
+            this.selectedUsuario.setContrasenia("");
             Usuario usuario = this.usuarioService.save(this.selectedUsuario);
             if(Objects.nonNull(usuario)) {
                 this.usuarios.add(usuario);
@@ -73,6 +74,8 @@ public class UsuarioCrudView implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario Actualizado"));
         }
 
+        this.selectedUsuario = null;
+
         PrimeFaces.current().executeScript("PF('manageUsuarioDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-usuarios");
     }
@@ -80,19 +83,11 @@ public class UsuarioCrudView implements Serializable {
     public void delete() {
         this.usuarioService.delete(this.selectedUsuario);
         this.usuarios.remove(this.selectedUsuario);
+        if(Objects.nonNull(this.selectedUsuarios))
+            this.selectedUsuarios.remove(this.selectedUsuario);
         this.selectedUsuario = null;
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario Removido"));
         PrimeFaces.current().ajax().update("form:messages", "form:dt-usuarios");
-        PrimeFaces.current().ajax().update("form:messages", "form:manage-usuario-content");
-    }
-
-    public void delete(Usuario usuario) {
-        this.usuarioService.delete(usuario);
-        this.usuarios.remove(usuario);
-        this.selectedUsuario = null;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario Removido"));
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-usuarios");
-        PrimeFaces.current().ajax().update("form:messages", "form:manage-usuario-content");
     }
 
     public void findAll() {
@@ -102,10 +97,10 @@ public class UsuarioCrudView implements Serializable {
     public String getDeleteButtonMessage() {
         if (hasSelectedUsuarios()) {
             int size = this.selectedUsuarios.size();
-            return size > 1 ? size + " products selected" : "1 product selected";
+            return size > 1 ? size + " Usuarios Seleccionados" : "1 Usuario Seleccionado";
         }
 
-        return "Delete";
+        return "Borrar";
     }
 
     public boolean hasSelectedUsuarios() {
@@ -113,11 +108,13 @@ public class UsuarioCrudView implements Serializable {
     }
 
     public void deleteSelectedUsuarios() {
-        for (Usuario usuario: this.selectedUsuarios) {
-            this.delete(usuario);
-            this.usuarios.remove(usuario);
+        for (Usuario usuario : this.selectedUsuarios) {
+            this.usuarioService.delete(usuario);
         }
+
+        this.usuarios.removeAll(this.selectedUsuarios);
         this.selectedUsuarios = null;
+
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuarios removidos"));
         PrimeFaces.current().ajax().update("form:messages", "form:dt-usuarios");
         PrimeFaces.current().executeScript("PF('dtUsuarios').clearFilters()");
