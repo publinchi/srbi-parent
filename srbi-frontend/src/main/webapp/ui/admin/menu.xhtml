@@ -1,0 +1,147 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        ADMINISTRACIÓN  - <span class="subitem">Menú</span>
+    </ui:define>
+
+    <ui:define name="description">
+        <!--This example demonstrates a simple but common usage of posting the form, updating the backend value and displaying the output with ajax.-->
+    </ui:define>
+
+    <ui:define name="implementation">
+        <h:form id="form">
+            <div class="card crud-demo">
+                <p:growl id="messages" showDetail="true"/>
+
+                <div class="products-buttonbar">
+                    <div>
+                        <p:commandButton value="Nuevo" icon="pi pi-plus" actionListener="#{menuCrudView.openNew}"
+                                         update="form:manage-menu-content" oncomplete="PF('manageMenuDialog').show()"
+                                         styleClass="success-button" style="margin-right: .5rem"/>
+                        <p:commandButton id="delete-menus-button" value="#{menuCrudView.deleteButtonMessage}"
+                                         icon="pi pi-trash" actionListener="#{menuCrudView.deleteSelectedMenus}"
+                                         styleClass="danger-button" disabled="#{!menuCrudView.hasSelectedMenus()}"
+                                         update="@this">
+                            <p:confirm header="Confirmación" message="Eliminar el menú seleccionado?"
+                                       icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+                    </div>
+                </div>
+
+                <p:dataTable id="dt-menus" widgetVar="dtMenus" var="menu" value="#{menuCrudView.menus}"
+                             reflow="true" styleClass="products-table"
+                             selection="#{menuCrudView.selectedMenus}" rowKey="#{menu.id}" paginator="true"
+                             rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">MENUS</span>
+
+                            <span class="filter-container ui-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtMenus').filter()" placeholder="Search"/>
+                    </span>
+
+                        </div>
+                    </f:facet>
+
+                    <p:ajax event="rowSelect" update=":form:delete-menus-button"/>
+                    <p:ajax event="rowUnselect" update=":form:delete-menus-button"/>
+                    <p:ajax event="rowSelectCheckbox" update=":form:delete-menus-button"/>
+                    <p:ajax event="rowUnselectCheckbox" update=":form:delete-menus-button"/>
+                    <p:ajax event="toggleSelect" update=":form:delete-menus-button"/>
+
+                    <p:column selectionMode="multiple" exportable="false"></p:column>
+
+                    <p:column headerText="Id" sortBy="#{menu.id}" filterBy="#{menu.id}">
+                        <h:outputText value="#{menu.id}"/>
+                    </p:column>
+                    <p:column headerText="Nombre" sortBy="#{menu.nombre}" filterBy="#{menu.nombre}">
+                        <h:outputText value="#{menu.nombre}"/>
+                    </p:column>
+                    <p:column headerText="Nivel" sortBy="#{menu.nivel}" filterBy="#{menu.nivel}">
+                        <h:outputText value="#{menu.nivel}"/>
+                    </p:column>
+                    <p:column headerText="Id Padre" sortBy="#{menu.idMenuPadre}" filterBy="#{menu.idMenuPadre}">
+                        <h:outputText value="#{menu.idMenuPadre}"/>
+                    </p:column>
+                    <p:column headerText="U. Creación" sortBy="#{menu.idUsuarioCreacion}"
+                              filterBy="#{menu.idUsuarioCreacion}">
+                        <h:outputText value="#{menu.idUsuarioCreacion}"/>
+                    </p:column>
+                    <p:column headerText="F. Creación" sortBy="#{menu.fechaCreacion}"
+                              filterBy="#{menu.fechaCreacion}">
+                        <h:outputText value="#{menu.fechaCreacion}"/>
+                    </p:column>
+                    <p:column headerText="U. Modificación" sortBy="#{menu.idUsuarioModificacion}"
+                              filterBy="#{menu.idUsuarioModificacion}">
+                        <h:outputText value="#{menu.idUsuarioModificacion}"/>
+                    </p:column>
+                    <p:column headerText="F. Modificación" sortBy="#{menu.fechaModificacion}"
+                              filterBy="#{menu.fechaModificacion}">
+                        <h:outputText value="#{menu.fechaModificacion}"/>
+                    </p:column>
+                    <p:column headerText="Estado" sortBy="#{menu.estado}"
+                              filterBy="#{menu.estado}">
+                        <h:outputText value="#{menu.estado}"/>
+                    </p:column>
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil" update=":form:manage-menu-content"
+                                         oncomplete="PF('manageMenuDialog').show()"
+                                         styleClass="edit-button rounded-button success-button" process="@this">
+                            <f:setPropertyActionListener value="#{menu}" target="#{menuCrudView.selectedMenu}"/>
+                        </p:commandButton>
+                        <p:commandButton class="warning-button rounded-button" icon="pi pi-trash" process="@this"
+                                         oncomplete="PF('deleteMenuDialog').show()">
+                            <f:setPropertyActionListener value="#{menu}" target="#{menuCrudView.selectedMenu}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:dialog header="Detalles Menú" width="450" showEffect="fade" modal="true"
+                          widgetVar="manageMenuDialog" responsive="true">
+                    <p:outputPanel id="manage-menu-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty menuCrudView.selectedMenu}">
+                            <div class="p-field">
+                                <p:outputLabel for="nombre">Nombre</p:outputLabel>
+                                <p:inputText id="nombre" value="#{menuCrudView.selectedMenu.nombre}" required="true"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="nivel">Nivel</p:outputLabel>
+                                <p:inputText id="nivel" value="#{menuCrudView.selectedMenu.nivel}" required="true"/>
+                            </div>
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{menuCrudView.save}"
+                                         update="manage-menu-content" process="manage-menu-content @this"/>
+                        <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageMenuDialog').hide()"
+                                         class="secondary-button"/>
+                    </f:facet>
+                </p:dialog>
+
+                <p:confirmDialog widgetVar="deleteMenuDialog" showEffect="fade" width="300"
+                                 message="Eliminar el menú?" header="Confirmación" severity="warn">
+                    <p:commandButton value="Si" icon="pi pi-check" actionListener="#{menuCrudView.delete}"
+                                     process="@this" oncomplete="PF('deleteMenuDialog').hide()"
+                                     update=":form:delete-menus-button"/>
+                    <p:commandButton value="No" type="button" styleClass="secondary-button" icon="pi pi-times"
+                                     onclick="PF('deleteMenuDialog').hide()"/>
+                </p:confirmDialog>
+
+                <p:confirmDialog global="true" showEffect="fade" width="300">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no secondary-button"
+                                     icon="pi pi-times"/>
+                </p:confirmDialog>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
