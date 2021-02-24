@@ -23,7 +23,7 @@
     </context-param>
 
     <welcome-file-list>
-        <welcome-file>index.xhtml</welcome-file>
+        <welcome-file>login.xhtml</welcome-file>
     </welcome-file-list>
 
     <context-param>
@@ -99,6 +99,19 @@
     <filter-mapping>
         <filter-name>Character Encoding Filter</filter-name>
         <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>org.primefaces.showcase.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/ui/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/index.xhtml</url-pattern>
     </filter-mapping>
 
     <error-page>

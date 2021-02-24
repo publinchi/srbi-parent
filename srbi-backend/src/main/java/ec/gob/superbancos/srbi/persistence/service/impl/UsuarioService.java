@@ -39,6 +39,11 @@ public class UsuarioService extends AbstractService<Usuario> implements IUsuario
         return dao.findAll(pageable);
     }
 
+    @Override
+    public Usuario findByLogin(String login) {
+        return dao.findByLogin(login);
+    }
+
     // overridden to be secured
 
     @Override

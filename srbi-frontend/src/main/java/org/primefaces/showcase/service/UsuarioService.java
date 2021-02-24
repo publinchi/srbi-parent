@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -76,6 +77,16 @@ public class UsuarioService {
 
     public Usuario find(long id) {
         return null;
+    }
+
+    public Usuario findByLogin(final String login) {
+        WebTarget webTarget = restClient.getWebTarget("usuarios/login/" + login);
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        try {
+            return invocationBuilder.get(Usuario.class);
+        } catch (NotFoundException notFoundException) {
+            return null;
+        }
     }
 
     public List<Usuario> findAll() {

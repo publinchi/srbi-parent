@@ -70,6 +70,21 @@ public class UsuarioController {
 
     }
 
+    @GetMapping(value = "/login/{login}")
+    public Usuario findByLogin(@PathVariable("login") final String login, final HttpServletResponse response) {
+        try {
+            final Usuario resourceByLogin = RestPreconditions.checkFound(service.findByLogin(login));
+
+            eventPublisher.publishEvent(new SingleResourceRetrievedEvent(this, response));
+            return resourceByLogin;
+        }
+        catch (MyResourceNotFoundException exc) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Usuario Not Found", exc);
+        }
+
+    }
+
     // read - all
 
     @GetMapping
