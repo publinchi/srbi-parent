@@ -9,4 +9,6 @@ public interface IUsuarioService extends IOperations<Usuario> {
 
     Page<Usuario> findPaginated(Pageable pageable);
 
+    Usuario findByLogin(final String login);
+
 }

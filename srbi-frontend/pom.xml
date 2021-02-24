@@ -203,6 +203,11 @@
             <artifactId>jersey-media-json-jackson</artifactId>
             <version>2.25.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <repositories>
