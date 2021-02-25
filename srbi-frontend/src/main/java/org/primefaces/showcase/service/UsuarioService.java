@@ -2,11 +2,14 @@ package org.primefaces.showcase.service;
 
 import ec.gob.superbancos.srbi.persistence.model.Usuario;
 import org.primefaces.showcase.common.RestClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -18,6 +21,8 @@ import java.util.*;
 @Named
 @ApplicationScoped
 public class UsuarioService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UsuarioService.class);
 
     List<Usuario> usuarios;
 
@@ -53,8 +58,8 @@ public class UsuarioService {
 
     }
 
-    public Usuario save(Usuario usuario) {
-        Usuario clientResponse;
+    public Usuario save(Usuario usuario) throws BadRequestException {
+        Usuario clientResponse = null;
 
         if(usuario.getId() <=0) {
             WebTarget webTarget = restClient.getWebTarget("usuarios");
@@ -63,7 +68,7 @@ public class UsuarioService {
         } else {
             WebTarget webTarget = restClient.getWebTarget("usuarios/" + usuario.getId());
             Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-            clientResponse = invocationBuilder.put(Entity.entity(usuario, MediaType.APPLICATION_JSON), Usuario.class);
+            invocationBuilder.put(Entity.entity(usuario, MediaType.APPLICATION_JSON), Usuario.class);
         }
 
         return clientResponse;
