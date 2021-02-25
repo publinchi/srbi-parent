@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.BadRequestException;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
@@ -70,8 +71,14 @@ public class UsuarioCrudView implements Serializable {
         }
         else {
             this.selectedUsuario.setFechaModificacion(Calendar.getInstance().getTime());
-            this.usuarioService.save(this.selectedUsuario);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario Actualizado"));
+            try {
+                this.usuarioService.save(this.selectedUsuario);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario Actualizado"));
+            } catch(BadRequestException badRequestException){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error al actualizar",
+                        "Usuario no pudo ser actualizado!!!"));
+            }
         }
 
         this.selectedUsuario = null;
