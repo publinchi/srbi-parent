@@ -75,7 +75,9 @@
                     </p:column>
                     <p:column headerText="F. Creación" sortBy="#{menu.fechaCreacion}"
                               filterBy="#{menu.fechaCreacion}">
-                        <h:outputText value="#{menu.fechaCreacion}"/>
+                        <h:outputText value="#{menu.fechaCreacion}">
+                            <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                        </h:outputText>
                     </p:column>
                     <p:column headerText="U. Modificación" sortBy="#{menu.idUsuarioModificacion}"
                               filterBy="#{menu.idUsuarioModificacion}">
@@ -83,7 +85,9 @@
                     </p:column>
                     <p:column headerText="F. Modificación" sortBy="#{menu.fechaModificacion}"
                               filterBy="#{menu.fechaModificacion}">
-                        <h:outputText value="#{menu.fechaModificacion}"/>
+                        <h:outputText value="#{menu.fechaModificacion}">
+                            <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                        </h:outputText>
                     </p:column>
                     <p:column headerText="Estado" sortBy="#{menu.estado}"
                               filterBy="#{menu.estado}">
