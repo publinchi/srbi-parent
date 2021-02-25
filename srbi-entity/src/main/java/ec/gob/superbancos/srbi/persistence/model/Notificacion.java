@@ -1,6 +1,8 @@
 package ec.gob.superbancos.srbi.persistence.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import ec.gob.superbancos.srbi.persistence.deser.MultiDateDeserializer;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,12 +24,12 @@ public class Notificacion implements Serializable {
     private long estado;
     @Column(name = "id_usuario_creacion")
     private long idUsuarioCreacion;
-    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @JsonDeserialize(using = MultiDateDeserializer.class)
     @Column(name = "fecha_creacion")
     private Date fechaCreacion;
     @Column(name = "id_usuario_modificacion")
     private long idUsuarioModificacion;
-    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @JsonDeserialize(using = MultiDateDeserializer.class)
     @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
     @Column(name = "tipo_notificacion_id_tipo_notificacion")

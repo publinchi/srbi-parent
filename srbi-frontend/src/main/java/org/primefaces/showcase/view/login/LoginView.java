@@ -9,7 +9,7 @@ import ec.gob.superbancos.srbi.persistence.model.Usuario;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.PrimeFaces;
-import org.primefaces.showcase.service.UsuarioService;
+import org.primefaces.showcase.service.LoginService;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -37,14 +37,18 @@ public class LoginView implements Serializable {
     private Usuario usuario;
     private static final Logger LOGGER = Logger.getLogger(LoginView.class.getName());
     @Inject
-    private UsuarioService usuarioService;
+    private LoginService loginService;
 
     public LoginView() {}
 
     public void login() {
-        usuario = usuarioService.findByLogin(userName);
+        Usuario usuario = new Usuario();
+        usuario.setLogin(userName);
+        usuario.setContrasenia(password);
+        boolean exito = loginService.login(usuario);
         FacesContext context = FacesContext.getCurrentInstance();
-        if(Objects.nonNull(usuario) && Objects.equals(usuario.getContrasenia(), password)) {
+        if(exito) {
+            this.usuario = usuario;
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Login Exitoso",
                     "Bienvenido."));
             context.getExternalContext().getFlash().setKeepMessages(true);

@@ -69,7 +69,9 @@
                     </p:column>
                     <p:column headerText="F. Creación" sortBy="#{usuario.fechaCreacion}"
                               filterBy="#{usuario.fechaCreacion}">
-                        <h:outputText value="#{usuario.fechaCreacion}"/>
+                        <h:outputText value="#{usuario.fechaCreacion}">
+                            <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                        </h:outputText>
                     </p:column>
                     <p:column headerText="U. Modificación" sortBy="#{usuario.idUsuarioModificacion}"
                               filterBy="#{usuario.idUsuarioModificacion}">
@@ -77,7 +79,9 @@
                     </p:column>
                     <p:column headerText="F. Modificación" sortBy="#{usuario.fechaModificacion}"
                               filterBy="#{usuario.fechaModificacion}">
-                        <h:outputText value="#{usuario.fechaModificacion}"/>
+                        <h:outputText value="#{usuario.fechaModificacion}">
+                            <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+                        </h:outputText>
                     </p:column>
                     <p:column headerText="Intentos" sortBy="#{usuario.intento}"
                               filterBy="#{usuario.intento}">

@@ -1,6 +1,7 @@
 package ec.gob.superbancos.srbi.persistence.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import ec.gob.superbancos.srbi.persistence.deser.MultiDateDeserializer;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,7 +17,7 @@ public class Usuario implements Serializable {
     private String login;
     @Column(name = "id_usuario_creacion")
     private long idUsuarioCreacion;
-    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @JsonDeserialize(using = MultiDateDeserializer.class)
     @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
     private long intento;
@@ -24,7 +25,7 @@ public class Usuario implements Serializable {
     private String contrasenia;
     @Column(name = "id_usuario_modificacion")
     private long idUsuarioModificacion;
-    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSSX")
+    @JsonDeserialize(using = MultiDateDeserializer.class)
     @Column(name = "fecha_creacion")
     private Date fechaCreacion;
     private long estado;
