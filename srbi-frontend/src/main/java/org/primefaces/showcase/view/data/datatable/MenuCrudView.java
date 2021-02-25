@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.ws.rs.BadRequestException;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
@@ -61,6 +62,9 @@ public class MenuCrudView implements Serializable {
         if (this.selectedMenu.getId() <= 0) {
             this.selectedMenu.setFechaCreacion(Calendar.getInstance().getTime());
             this.selectedMenu.setIdUsuarioCreacion(5);
+            if(Objects.nonNull(this.selectedMenu.getIdMenuPadre()) && this.selectedMenu.getIdMenuPadre().longValue() == 0) {
+                this.selectedMenu.setIdMenuPadre(null);
+            }
             Menu menu = this.menuService.save(this.selectedMenu);
             if(Objects.nonNull(menu)) {
                 this.menus.add(menu);
@@ -68,11 +72,21 @@ public class MenuCrudView implements Serializable {
             }
         }
         else {
+            if(Objects.nonNull(this.selectedMenu.getIdMenuPadre()) && this.selectedMenu.getIdMenuPadre().longValue() == 0) {
+                this.selectedMenu.setIdMenuPadre(null);
+            }
             this.selectedMenu.setFechaModificacion(Calendar.getInstance().getTime());
-            this.menuService.save(this.selectedMenu);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Menú Actualizado"));
+            try {
+                this.menuService.save(this.selectedMenu);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Menú Actualizado"));
+            } catch(BadRequestException badRequestException){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        "Error al actualizar",
+                        "Menu no pudo ser actualizado!!!"));
+            }
         }
-        this.selectedMenu=null;
+
+        this.selectedMenu = null;
         PrimeFaces.current().executeScript("PF('manageMenuDialog').hide()");
         PrimeFaces.current().ajax().update("form:messages", "form:dt-menus");
     }
