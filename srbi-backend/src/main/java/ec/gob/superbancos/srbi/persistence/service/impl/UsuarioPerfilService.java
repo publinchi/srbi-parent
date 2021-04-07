@@ -49,4 +49,9 @@ public class UsuarioPerfilService extends AbstractService<UsuarioPerfil> impleme
         return Lists.newArrayList(getDao().findAll());
     }
 
+    @Override
+    public UsuarioPerfil findByIdUsu(final long idUsuario){
+        return dao.findByIdUsu (idUsuario);
+    }
+
 }

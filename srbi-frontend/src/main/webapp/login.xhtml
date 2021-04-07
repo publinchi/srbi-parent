@@ -5,19 +5,22 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-    <title>Login</title>
+    <title>INGRESO A REPORTES BI</title>
+    <!--
     <link type="text/css" rel="stylesheet" href="https://www.primefaces.org/showcase/javax.faces.resource/fa/font-awesome.css.xhtml?ln=primefaces"/>
+    -->
 </h:head>
 
-<h:body>
-    <h:form id="frmLogin" >
+<h:body style="text-align:center">
+    <h1 align="center">INGRESO A REPORTES BI</h1>
+    <h:form id="frmLogin" style="text-align:center">
         <p:growl id="growl" sticky="false" showDetail="true" life="3000" />
-        <h:panelGrid id="basic" header="Ingresar Usuario" columns="2" cellpadding="5" style="margin-bottom:20px">
+        <h:panelGrid id="basic" header="Ingresar Usuario" columns="2" cellpadding="5" style="text-align:center">
             <p:outputLabel for="username" value="Usuario:" />
             <p:inputText id="username" value="#{loginView.userName}" required="true" label="Usuario" />
             <p:outputLabel for="password" value="Contraseña:" />
             <p:password id="password" value="#{loginView.password}" required="true" label="Contraseña" />
-            <p:commandButton value="Login" update="growl" actionListener="#{loginView.login()}"/>
+            <p:commandButton value="Ingresar" update="growl" actionListener="#{loginView.validarLDAP}"/>
         </h:panelGrid>
     </h:form>
 </h:body>

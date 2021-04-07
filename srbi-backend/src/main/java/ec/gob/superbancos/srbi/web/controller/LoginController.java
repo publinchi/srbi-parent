@@ -46,4 +46,26 @@ public class LoginController {
             return true;
         return false;
     }
+
+    @PostMapping( "/validarLDAP/")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Usuario validarLDAP(@RequestBody final Usuario resource, final HttpServletResponse response) {
+    //public boolean validarLDAP(@RequestBody final Usuario resource) {
+        Preconditions.checkNotNull(resource);
+        //final Usuario foo = service.validarLDAP(resource);
+        final Usuario foo = service.validarLDAP(resource.getLogin(), resource.getContrasenia());
+        if(Objects.isNull(foo)) {
+            System.out.println("es null el objeto");
+            //return false;
+        }
+        else
+            if (foo.getId()>0)
+            {
+                System.out.println("id" + foo.getId());
+                //return true;
+            }
+        System.out.println("id" + foo.getId());
+        //return false;
+        return foo;
+    }
 }

@@ -11,6 +11,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
+
 @Named
 @ApplicationScoped
 public class LoginService {
@@ -23,5 +24,16 @@ public class LoginService {
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
         return invocationBuilder.post(Entity.entity(usuario, MediaType.APPLICATION_JSON), Boolean.class);
     }
+
+    public Usuario validarCredencial(Usuario usuario) {
+        Usuario clientResponse = null;
+        System.out.println("service");
+        System.out.println(usuario.getLogin());
+        WebTarget webTarget = restClient.getWebTarget("logins/validarLDAP/");
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        return invocationBuilder.post(Entity.entity(usuario, MediaType.APPLICATION_JSON), Usuario.class);
+    }
+
+
 
 }

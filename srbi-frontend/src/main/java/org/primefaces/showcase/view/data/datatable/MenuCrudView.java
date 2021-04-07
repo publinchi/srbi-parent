@@ -2,6 +2,9 @@ package org.primefaces.showcase.view.data.datatable;
 
 import ec.gob.superbancos.srbi.persistence.model.Menu;
 import org.primefaces.PrimeFaces;
+import org.primefaces.model.menu.DefaultMenuItem;
+import org.primefaces.model.menu.DefaultSubMenu;
+import org.primefaces.model.menu.MenuModel;
 import org.primefaces.showcase.service.MenuService;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.BadRequestException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +29,8 @@ public class MenuCrudView implements Serializable {
     private Menu selectedMenu;
 
     private List<Menu> selectedMenus;
+
+    private MenuModel model;
 
     @Inject
     private MenuService menuService;
@@ -62,9 +68,10 @@ public class MenuCrudView implements Serializable {
         if (this.selectedMenu.getId() <= 0) {
             this.selectedMenu.setFechaCreacion(Calendar.getInstance().getTime());
             this.selectedMenu.setIdUsuarioCreacion(5);
-            if(Objects.nonNull(this.selectedMenu.getIdMenuPadre()) && this.selectedMenu.getIdMenuPadre().longValue() == 0) {
+            /*if(Objects.nonNull(this.selectedMenu.getIdMenuPadre()) && this.selectedMenu.getIdMenuPadre().longValue() == 0) {
                 this.selectedMenu.setIdMenuPadre(null);
-            }
+            }*/
+            this.selectedMenu.setIdUsuarioModificacion(5);
             Menu menu = this.menuService.save(this.selectedMenu);
             if(Objects.nonNull(menu)) {
                 this.menus.add(menu);
@@ -72,9 +79,9 @@ public class MenuCrudView implements Serializable {
             }
         }
         else {
-            if(Objects.nonNull(this.selectedMenu.getIdMenuPadre()) && this.selectedMenu.getIdMenuPadre().longValue() == 0) {
+            /*if(Objects.nonNull(this.selectedMenu.getIdMenuPadre()) && this.selectedMenu.getIdMenuPadre().longValue() == 0) {
                 this.selectedMenu.setIdMenuPadre(null);
-            }
+            }*/
             this.selectedMenu.setFechaModificacion(Calendar.getInstance().getTime());
             try {
                 this.menuService.save(this.selectedMenu);
@@ -128,5 +135,51 @@ public class MenuCrudView implements Serializable {
         PrimeFaces.current().executeScript("PF('dtMenus').clearFilters()");
     }
 
+    /*
+    public void elaborarMenu()
+    {
+        List<DefaultMenuItem> items= new ArrayList<>();
+        for (Menu m: this.menus)
+        {
+            if (m.getNivel()==1)
+            {
+                DefaultSubMenu menuRaiz= new DefaultSubMenu();
+                menuRaiz.setLabel(m.getNombre());
+                for (Menu mi: this.menus)
+                {
+                    Menu subMenu;
+                    subMenu = mi.getSubmenu();
+                    if (subMenu!=null)
+                    {
+                        if(subMenu.getId()==m.getId())
+                        {
+                            DefaultMenuItem item= new DefaultMenuItem();
+                            item.setValue(subMenu.getNombre());
+                            //menuRaiz.addElement(item);
+                            menuRaiz.getElements().add(item);
+                        }
+                    }
+                }
+                getModel().addElement(menuRaiz);
+                //model.getElements().add(menuRaiz);
+            }
+            else
+            {
+                DefaultMenuItem item= new DefaultMenuItem();
+                item.setValue(m.getNombre());
+                getModel().addElement(item);
+            }
 
+        }
+
+    }
+*/
+
+    public MenuModel getModel() {
+        return model;
+    }
+
+    public void setModel(MenuModel model) {
+        this.model = model;
+    }
 }

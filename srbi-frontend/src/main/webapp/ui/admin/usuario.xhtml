@@ -42,10 +42,9 @@
                             <span style="font-weight: bold">USUARIOS</span>
 
                             <span class="filter-container ui-input-icon-left">
-                        <i class="pi pi-search"></i>
-                        <p:inputText id="globalFilter" onkeyup="PF('dtUsuarios').filter()" placeholder="Search"/>
-                    </span>
-
+                                <i class="pi pi-search"></i>
+                                <p:inputText id="globalFilter" onkeyup="PF('dtUsuarios').filter()" placeholder="Search"/>
+                            </span>
                         </div>
                     </f:facet>
 
@@ -126,8 +125,23 @@
                                 <p:inputText id="login" value="#{usuarioCrudView.selectedUsuario.login}" required="true"/>
                             </div>
                             <div class="p-field">
+                                <p:outputLabel for="contrasenia">Contraseña</p:outputLabel>
+                                <p:password id="contrasenia" value="#{usuarioCrudView.selectedUsuario.contrasenia}" required="true"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="idDepartamento">Departamento</p:outputLabel>
+                                <p:inputText id="idDepartamento" value="#{usuarioCrudView.selectedUsuario.idDepartamento}" required="true"/>
+                            </div>
+                            <div class="p-field">
                                 <p:outputLabel for="correo">Correo Empresarial</p:outputLabel>
                                 <p:inputText id="correo" value="#{usuarioCrudView.selectedUsuario.correoEmpresarial}" required="true"/>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <p:outputLabel for="estado">Estado</p:outputLabel>
+                                <p:selectOneMenu id="estado" value="#{usuarioCrudView.selectedUsuario.estado}" required="true" >
+                                    <f:selectItem itemLabel="Inactivo" itemValue="0"/>
+                                    <f:selectItem itemLabel="Activo" itemValue="1"/>
+                                </p:selectOneMenu>
                             </div>
                         </p:outputPanel>
                     </p:outputPanel>

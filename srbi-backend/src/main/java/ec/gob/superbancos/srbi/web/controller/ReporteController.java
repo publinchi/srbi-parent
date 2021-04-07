@@ -139,4 +139,16 @@ public class ReporteController {
         final String error = "Application specific error handling";
         logger.error(error, ex);
     }*/
+
+    @GetMapping(value = "/{idUsuario}")
+    public List<Reporte> findIdUsuario(@RequestParam("idUsuario") final int idUsuario,  final HttpServletResponse response) {
+        /*
+        if (page > resultPage.getTotalPages()) {
+            throw new MyResourceNotFoundException();
+        }
+        eventPublisher.publishEvent(new PaginatedResultsRetrievedEvent<Reporte>(Reporte.class, uriBuilder, response, page,
+                resultPage.getTotalPages(), size));
+*/
+        return service.findAll();
+    }
 }

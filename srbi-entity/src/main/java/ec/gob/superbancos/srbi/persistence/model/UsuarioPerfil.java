@@ -19,6 +19,11 @@ public class UsuarioPerfil implements Serializable {
     private long idPerfil;
     @Column(name = "id_usuario")
     private long idUsuario;
+
+  /*  @ManyToOne
+    @JoinColumn(name="id_usuario")
+    private Usuario usuario;
+*/
     private long estado;
     @Column(name = "id_usuario_creacion")
     private long idUsuarioCreacion;
@@ -47,7 +52,7 @@ public class UsuarioPerfil implements Serializable {
         this.idPerfil = idPerfil;
     }
 
-    public long getIdUsuario() {
+   public long getIdUsuario() {
         return idUsuario;
     }
 
@@ -117,4 +122,13 @@ public class UsuarioPerfil implements Serializable {
         } else return id == other.id;
     }
 
+/*
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    */
 }

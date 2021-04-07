@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebContextManager">
+    <option name="state">
+      <map>
+        <entry key="file://$PROJECT_DIR$/srbi-frontend/src/main/webapp/WEB-INF/menu.xhtml" value="file://$PROJECT_DIR$/srbi-frontend/src/main/webapp/WEB-INF" />
+        <entry key="file://$PROJECT_DIR$/srbi-frontend/src/main/webapp/ui/report/reporteBI.xhtml" value="file://$PROJECT_DIR$/srbi-frontend/src/main/webapp/ui/report" />
+      </map>
+    </option>
+  </component>
+</project>

@@ -3,6 +3,7 @@ package ec.gob.superbancos.srbi.persistence.service.impl;
 import com.google.common.collect.Lists;
 import ec.gob.superbancos.srbi.persistence.dao.IMenuPerfilDao;
 import ec.gob.superbancos.srbi.persistence.model.MenuPerfil;
+import ec.gob.superbancos.srbi.persistence.model.Usuario;
 import ec.gob.superbancos.srbi.persistence.service.IMenuPerfilService;
 import ec.gob.superbancos.srbi.persistence.service.common.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,11 @@ public class MenuPerfilService extends AbstractService<MenuPerfil> implements IM
     @Transactional(readOnly = true)
     public List<MenuPerfil> findAll() {
         return Lists.newArrayList(getDao().findAll());
+    }
+
+    @Override
+    public MenuPerfil findByIdPerfil(final long idPerfil) {
+        return dao.findByIdPerfil(idPerfil);
     }
 
 }

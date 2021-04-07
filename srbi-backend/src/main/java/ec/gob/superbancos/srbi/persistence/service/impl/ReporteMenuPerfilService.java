@@ -2,6 +2,7 @@ package ec.gob.superbancos.srbi.persistence.service.impl;
 
 import com.google.common.collect.Lists;
 import ec.gob.superbancos.srbi.persistence.dao.IReporteMenuPerfilDao;
+import ec.gob.superbancos.srbi.persistence.model.MenuPerfil;
 import ec.gob.superbancos.srbi.persistence.model.ReporteMenuPerfil;
 import ec.gob.superbancos.srbi.persistence.service.IReporteMenuPerfilService;
 import ec.gob.superbancos.srbi.persistence.service.common.AbstractService;
@@ -12,6 +13,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,4 +49,13 @@ public class ReporteMenuPerfilService extends AbstractService<ReporteMenuPerfil>
         return Lists.newArrayList(getDao().findAll());
     }
 
+    @Override
+    public List<ReporteMenuPerfil> findByIdMenuPerfil(final long idMenuPerfil){
+        System.out.println(" findByIdMenuPerfil Service Implementa ");
+        List<ReporteMenuPerfil> reportl= new ArrayList<>();
+        reportl=dao.findByIdMenuPerfil (idMenuPerfil);
+        System.out.println(" tamaño de lista " + reportl.size());
+        return reportl;
+
+    }
 }

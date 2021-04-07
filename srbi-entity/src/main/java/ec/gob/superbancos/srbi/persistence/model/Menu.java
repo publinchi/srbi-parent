@@ -28,8 +28,10 @@ public class Menu implements Serializable {
     @Column(name = "fecha_modificacion")
     private Date fechaModificacion;
     private long estado;
-    @Column(name = "id_menu_padre")
-    private Long idMenuPadre;
+
+    @ManyToOne
+    @JoinColumn(name = "id_menu_padre")
+    private Menu submenu;
 
     public long getId() {
         return id;
@@ -94,7 +96,7 @@ public class Menu implements Serializable {
     public void setEstado(long estado) {
         this.estado = estado;
     }
-
+/*
     public Long getIdMenuPadre() {
         return idMenuPadre;
     }
@@ -102,7 +104,7 @@ public class Menu implements Serializable {
     public void setIdMenuPadre(Long idMenuPadre) {
         this.idMenuPadre = idMenuPadre;
     }
-
+*/
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -123,5 +125,13 @@ public class Menu implements Serializable {
         if (id == 0) {
             return other.id == 0;
         } else return id == other.id;
+    }
+
+    public Menu getSubmenu() {
+        return submenu;
+    }
+
+    public void setSubmenu(Menu submenu) {
+        this.submenu = submenu;
     }
 }

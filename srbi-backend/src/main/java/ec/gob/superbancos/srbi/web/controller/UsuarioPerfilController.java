@@ -2,6 +2,8 @@ package ec.gob.superbancos.srbi.web.controller;
 
 import com.google.common.base.Preconditions;
 import ec.gob.superbancos.srbi.persistence.model.Usuario;
+import ec.gob.superbancos.srbi.persistence.model.UsuarioPerfil;
+import ec.gob.superbancos.srbi.persistence.service.IUsuarioPerfilService;
 import ec.gob.superbancos.srbi.persistence.service.IUsuarioService;
 import ec.gob.superbancos.srbi.web.exception.MyResourceNotFoundException;
 import ec.gob.superbancos.srbi.web.hateoas.event.PaginatedResultsRetrievedEvent;
@@ -33,7 +35,7 @@ public class UsuarioPerfilController {
     private ApplicationEventPublisher eventPublisher;
 
     @Autowired
-    private IUsuarioService service;
+    private IUsuarioPerfilService service;
 
     public UsuarioPerfilController() {
         super();
@@ -56,9 +58,9 @@ public class UsuarioPerfilController {
     // read - one
 
     @GetMapping(value = "/{id}")
-    public Usuario findById(@PathVariable("id") final Long id, final HttpServletResponse response) {
+    public UsuarioPerfil findById(@PathVariable("id") final Long id, final HttpServletResponse response) {
         try {
-            final Usuario resourceById = RestPreconditions.checkFound(service.findById(id));
+            final UsuarioPerfil resourceById = RestPreconditions.checkFound(service.findById(id));
 
             eventPublisher.publishEvent(new SingleResourceRetrievedEvent(this, response));
             return resourceById;
@@ -70,17 +72,31 @@ public class UsuarioPerfilController {
 
     }
 
+    @GetMapping(value = "/usuario/{IdUsuario}")
+    public UsuarioPerfil findByIdUsuario(@PathVariable("IdUsuario") final Long IdUsuario, final HttpServletResponse response) {
+        try {
+            final UsuarioPerfil resourceById = RestPreconditions.checkFound(service.findByIdUsu (IdUsuario));
+
+            eventPublisher.publishEvent(new SingleResourceRetrievedEvent(this, response));
+            return resourceById;
+        }
+        catch (MyResourceNotFoundException exc) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Usuario Not Found", exc);
+        }
+
+    }
     // read - all
 
     @GetMapping
-    public List<Usuario> findAll() {
+    public List<UsuarioPerfil> findAll() {
         return service.findAll();
     }
 
     @GetMapping(params = { "page", "size" })
-    public List<Usuario> findPaginated(@RequestParam("page") final int page, @RequestParam("size") final int size,
+    public List<UsuarioPerfil> findPaginated(@RequestParam("page") final int page, @RequestParam("size") final int size,
                                        final UriComponentsBuilder uriBuilder, final HttpServletResponse response) {
-        final Page<Usuario> resultPage = service.findPaginated(page, size);
+        final Page<UsuarioPerfil> resultPage = service.findPaginated(page, size);
         if (page > resultPage.getTotalPages()) {
             throw new MyResourceNotFoundException();
         }
@@ -91,9 +107,9 @@ public class UsuarioPerfilController {
     }
 
     @GetMapping("/pageable")
-    public List<Usuario> findPaginatedWithPageable(Pageable pageable, final UriComponentsBuilder uriBuilder,
+    public List<UsuarioPerfil> findPaginatedWithPageable(Pageable pageable, final UriComponentsBuilder uriBuilder,
                                                    final HttpServletResponse response) {
-        final Page<Usuario> resultPage = service.findPaginated(pageable);
+        final Page<UsuarioPerfil> resultPage = service.findPaginated(pageable);
         if (pageable.getPageNumber() > resultPage.getTotalPages()) {
             throw new MyResourceNotFoundException();
         }
@@ -107,9 +123,9 @@ public class UsuarioPerfilController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario create(@RequestBody final Usuario resource, final HttpServletResponse response) {
+    public UsuarioPerfil  create(@RequestBody final UsuarioPerfil resource, final HttpServletResponse response) {
         Preconditions.checkNotNull(resource);
-        final Usuario foo = service.create(resource);
+        final UsuarioPerfil foo = service.create(resource);
         final Long idOfCreatedResource = foo.getId();
 
         eventPublisher.publishEvent(new ResourceCreatedEvent(this, response, idOfCreatedResource));
@@ -119,7 +135,7 @@ public class UsuarioPerfilController {
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void update(@PathVariable("id") final Long id, @RequestBody final Usuario resource) {
+    public void update(@PathVariable("id") final Long id, @RequestBody final UsuarioPerfil resource) {
         Preconditions.checkNotNull(resource);
         if(Objects.equals(id, resource.getId())) {
             RestPreconditions.checkFound(service.findById(resource.getId()));
@@ -134,9 +150,4 @@ public class UsuarioPerfilController {
         service.deleteById(id);
     }
 
-    /*@ExceptionHandler({ CustomException1.class, CustomException2.class })
-    public void handleException(final Exception ex) {
-        final String error = "Application specific error handling";
-        logger.error(error, ex);
-    }*/
-}
+   }

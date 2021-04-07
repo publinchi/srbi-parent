@@ -119,6 +119,21 @@
                                 <p:outputLabel for="nivel">Nivel</p:outputLabel>
                                 <p:inputText id="nivel" value="#{menuCrudView.selectedMenu.nivel}" required="true"/>
                             </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <p:outputLabel for="idMenuPadre">Menú Padre</p:outputLabel>
+                                <p:selectOneMenu id="idMenuPadre" value="#{menuCrudView.selectedMenu.idMenuPadre}" >
+                                    <f:selectItem itemLabel="Ninguno" itemValue="0"/>
+                                </p:selectOneMenu>
+                            </div>
+
+                            <div class="p-field p-col-12 p-md-4">
+                                <p:outputLabel for="estado">Estado</p:outputLabel>
+                                <p:selectOneMenu id="estado" value="#{menuCrudView.selectedMenu.estado}" required="true" >
+                                    <f:selectItem itemLabel="Inactivo" itemValue="0"/>
+                                    <f:selectItem itemLabel="Activo" itemValue="1"/>
+                                </p:selectOneMenu>
+                            </div>
+
                         </p:outputPanel>
                     </p:outputPanel>
 
