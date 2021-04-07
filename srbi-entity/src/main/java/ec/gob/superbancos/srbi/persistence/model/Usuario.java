@@ -6,6 +6,7 @@ import ec.gob.superbancos.srbi.persistence.deser.MultiDateDeserializer;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "srbi_usuario")
 public class Usuario implements Serializable {
@@ -34,6 +35,11 @@ public class Usuario implements Serializable {
     @Column(name = "correo_empresarial")
     private String correoEmpresarial;
 
+/*
+     @OneToMany(cascade= CascadeType.ALL)
+     @JoinColumn(name="id_usuario")
+     private List<UsuarioPerfil> usuarioPerfilList;
+*/
     public Usuario() {
 
     }
@@ -170,4 +176,5 @@ public class Usuario implements Serializable {
             return other.id == 0;
         } else return id == other.id;
     }
+
 }

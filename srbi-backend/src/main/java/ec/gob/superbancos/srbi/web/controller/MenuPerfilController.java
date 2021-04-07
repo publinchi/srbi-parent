@@ -139,4 +139,19 @@ public class MenuPerfilController {
         final String error = "Application specific error handling";
         logger.error(error, ex);
     }*/
+
+    @GetMapping(value = "/findByIdPerfil/{idPerfil}")
+    public MenuPerfil findByIdPerfil(@PathVariable("idPerfil") final Long id, final HttpServletResponse response) {
+        try {
+            final MenuPerfil resourceById = RestPreconditions.checkFound(service.findByIdPerfil(id));
+            eventPublisher.publishEvent(new SingleResourceRetrievedEvent(this, response));
+            return resourceById;
+        }
+        catch (MyResourceNotFoundException exc) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Usuario Not Found", exc);
+        }
+
+    }
+
 }

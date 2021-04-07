@@ -23,6 +23,7 @@ public class MenuService {
 
     List<Menu> menus;
 
+
     @Inject
     private RestClient restClient;
 

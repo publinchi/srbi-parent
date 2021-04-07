@@ -11,4 +11,5 @@ public interface IUsuarioService extends IOperations<Usuario> {
 
     Usuario findByLogin(final String login);
 
+    Usuario validarLDAP(String usuario, String contrasenia);
 }

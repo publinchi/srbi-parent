@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template1.xhtml">
+
+    <ui:define name="title">
+        <span class="subitem">Listado de Reportes</span>
+    </ui:define>
+
+    <ui:define name="description">
+        <!--This example demonstrates a simple but common usage of posting the form, updating the backend value and displaying the output with ajax.-->
+    </ui:define>
+
+    <ui:define name="implementation">
+        <h:form id="form">
+            <div class="list-reporte">
+            <p:growl id="listado" showDetail="true"/>
+
+            <p:dataTable id="dt-reportes" widgetVar="dtReportes" var="reporte" value="#{reporteCrudView.asignedReportes}"
+                         reflow="true" styleClass="products-table"
+                         rowKey="#{reporte.id}" paginator="true"
+                         rows="4" paginatorPosition="bottom" selectionMode="single">
+                <f:facet name="header">
+                    <div class="products-table-header">
+                        <span style="font-weight: bold">Reportes</span>
+
+                        <span class="filter-container ui-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtReportes').filter()" placeholder="Buscar"/>
+                    </span>
+                    </div>
+                </f:facet>
+
+
+                <p:ajax event="rowSelect" update=":form:iframeP"/>
+                <p:ajax event="rowUnselect" update=":form:iframeP"/>
+                <!--
+                <p:column selectionMode="single" exportable="false"></p:column>
+-->
+                <p:column headerText="Id" sortBy="#{reporte.id}" >
+                    <h:outputText value="#{reporte.id}"/>
+                </p:column>
+                <p:column headerText="Nombre" sortBy="#{reporte.nombre}" >
+                    <h:outputText value="#{reporte.nombre}"/>
+                </p:column>
+                <p:column exportable="false">
+                    <p:commandButton icon="pi-chart-line"
+                                     styleClass="edit-button rounded-button success-button" value="Visualizar" update=":form:iframeP"
+                                     actionListener="#{reporteCrudView.asignarReporte(reporte)}">
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+
+            <p>
+            </p>
+            <p>
+            </p>
+
+                <div id="iframeDisplay" align="center" >
+                    <h:panelGroup id="iframeP">
+                    <iframe width="600" height="373.5" src="#{reporteCrudView.selectedReporte.ubicacion}" frameborder="0" allowFullScreen="true"></iframe>
+                    </h:panelGroup>
+                </div>
+            </div>
+
+        </h:form>
+    </ui:define>
+
+</ui:composition>

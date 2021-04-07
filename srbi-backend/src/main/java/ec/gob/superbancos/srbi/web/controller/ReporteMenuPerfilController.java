@@ -1,6 +1,7 @@
 package ec.gob.superbancos.srbi.web.controller;
 
 import com.google.common.base.Preconditions;
+import ec.gob.superbancos.srbi.persistence.model.MenuPerfil;
 import ec.gob.superbancos.srbi.persistence.model.ReporteMenuPerfil;
 import ec.gob.superbancos.srbi.persistence.service.IReporteMenuPerfilService;
 import ec.gob.superbancos.srbi.web.exception.MyResourceNotFoundException;
@@ -20,6 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -139,4 +141,14 @@ public class ReporteMenuPerfilController {
         final String error = "Application specific error handling";
         logger.error(error, ex);
     }*/
+//, final HttpServletResponse response
+    @GetMapping(value = "/findByIdMenuPerfil/{idMenuPerfil}")
+    public List<ReporteMenuPerfil>  findByIdMenuPerfil(@PathVariable("idMenuPerfil") final Long idMenuPerfil) {
+        System.out.println(" findByIdMenuPerfil controller ");
+        List<ReporteMenuPerfil> reportl= new ArrayList<>();
+        reportl=service.findByIdMenuPerfil(idMenuPerfil);
+        System.out.println(" tamaño de lista " + reportl.size());
+        return reportl;
+
+    }
 }

@@ -6,10 +6,13 @@
 package org.primefaces.showcase.view.login;
 
 import ec.gob.superbancos.srbi.persistence.model.Usuario;
+import ec.gob.superbancos.srbi.persistence.model.UsuarioPerfil;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.PrimeFaces;
 import org.primefaces.showcase.service.LoginService;
+import org.primefaces.showcase.service.MenuPerfilService;
+import org.primefaces.showcase.service.UsuarioPerfilService;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -19,6 +22,8 @@ import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,9 +40,16 @@ public class LoginView implements Serializable {
     @Setter
     private String userName, password;
     private Usuario usuario;
+    private UsuarioPerfil usuarioPerfil;
     private static final Logger LOGGER = Logger.getLogger(LoginView.class.getName());
     @Inject
     private LoginService loginService;
+
+    @Inject
+    private MenuPerfilService menuPerfilService;
+    @Inject
+    private UsuarioPerfilService usuarioPerfilService;
+
 
     public LoginView() {}
 
@@ -48,13 +60,11 @@ public class LoginView implements Serializable {
         boolean exito = loginService.login(usuario);
         FacesContext context = FacesContext.getCurrentInstance();
         if(exito) {
-            this.usuario = usuario;
+            this.setUsuario(usuario);
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Login Exitoso",
                     "Bienvenido."));
             context.getExternalContext().getFlash().setKeepMessages(true);
             try {
-                //     loadAuthorizedModules();
-                //      context.getExternalContext().redirect(context.getExternalContext().getRequestContextPath() + "/ui/index.xhtml");
                 HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
                 session.setAttribute("loginView", this);
                 context.getExternalContext().redirect(context.getExternalContext().getRequestContextPath() + "/index.xhtml");
@@ -76,11 +86,11 @@ public class LoginView implements Serializable {
 
     public boolean isLoggedIn() {
         Logger.getLogger(LoginView.class.getName()).log(Level.INFO, "Cheking logged in");
-        return usuario != null;
+        return getUsuario() != null;
     }
 
     public String logout() {
-        usuario = null;
+        setUsuario(null);
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "login?faces-redirect=true";
     }
@@ -128,5 +138,62 @@ public class LoginView implements Serializable {
             }
         }
      */
+    }
+
+    public void validarLDAP() {
+        int idPerfil=0;
+        String nombreIndex="/index.xhtml";
+        List<UsuarioPerfil> usuarioPerfiles= new ArrayList<>();
+        Usuario usuario = new Usuario();
+        Usuario usuarioValidado= new Usuario();
+        usuario.setLogin(userName);
+        usuario.setContrasenia(password);
+        System.out.println(usuario.getLogin());
+        usuarioValidado = loginService.validarCredencial(usuario);
+        System.out.println("Id validado: "+ usuarioValidado.getId());
+        System.out.println(usuarioValidado.getLogin());
+        FacesContext context = FacesContext.getCurrentInstance();
+        if(usuarioValidado.getId()>0) {
+            this.setUsuario(usuarioValidado);
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Login Exitoso",
+                    "Bienvenido."));
+            context.getExternalContext().getFlash().setKeepMessages(true);
+            PrimeFaces.current().ajax().update("form:messages", "frmLogin:basic");
+            try {
+                System.out.println("id usuario: "+usuario.getId());
+                usuarioPerfil= usuarioPerfilService.findByIdUsuario(usuarioValidado.getId());
+                System.out.println(usuarioPerfil.getIdPerfil());
+                idPerfil= (int)usuarioPerfil.getIdPerfil();
+                if (idPerfil==1)
+                    nombreIndex="/index.xhtml";
+                else
+                    nombreIndex="/index1.xhtml";
+                System.out.println(nombreIndex);
+                HttpSession session = (HttpSession) context.getExternalContext().getSession(true);
+                session.setAttribute("loginView", this);
+                System.out.println("ruta " + context.getExternalContext().getRequestContextPath() );
+                context.getExternalContext().redirect(context.getExternalContext().getRequestContextPath() + nombreIndex);
+            } catch (IOException ex) {
+                LOGGER.log(Level.SEVERE, ex.getMessage());
+            }
+            LOGGER.log(Level.INFO, "Login OK");
+            userName = null;
+            password = null;
+            return;
+        } else {
+            userName = null;
+            password = null;
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Login Error", "Nombre de usuario o contraseña incorrectos"));
+            PrimeFaces.current().ajax().update("form:messages", "frmLogin:basic");
+        }
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

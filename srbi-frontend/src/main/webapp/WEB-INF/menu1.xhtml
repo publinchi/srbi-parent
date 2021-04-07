@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:sc="http://primefaces.org/ui/showcase">
+
+    <div class="layout-sidebar" role="navigation">
+        <!--
+        <div class="search-input">
+            <i class="pi pi-search icon-search"/>
+            <input id="searchInput" type="text" placeholder="Search..." aria-label="Search input"/>
+        </div>
+        -->
+        <sc:menu>
+            <p:submenu id="sc_reportes" label="Reportes" icon="pi pi-bookmark">
+                <p:menuitem id="sc_reporteBI" value="Reporte BI" outcome="/ui/report/reporteBI"/>
+            </p:submenu>
+        </sc:menu>
+    </div>
+</ui:composition>

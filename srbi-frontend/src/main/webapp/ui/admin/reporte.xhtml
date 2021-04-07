@@ -1,0 +1,151 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        ADMINISTRACIÓN  - <span class="subitem">Reporte</span>
+    </ui:define>
+
+    <ui:define name="description">
+        <!--This example demonstrates a simple but common usage of posting the form, updating the backend value and displaying the output with ajax.-->
+    </ui:define>
+
+    <ui:define name="implementation">
+        <h:form id="form">
+            <div class="card crud-demo">
+                <p:growl id="messages" showDetail="true"/>
+
+                <div class="products-buttonbar">
+                    <div>
+                        <p:commandButton value="Nuevo" icon="pi pi-plus" actionListener="#{reporteCrudView.openNew}"
+                                         update="form:manage-reporte-content" oncomplete="PF('manageReporteDialog').show()"
+                                         styleClass="success-button" style="margin-right: .5rem"/>
+                        <p:commandButton id="delete-reportes-button" value="#{reporteCrudView.deleteButtonMessage}"
+                                         icon="pi pi-trash" actionListener="#{reporteCrudView.deleteSelectedReportes}"
+                                         styleClass="danger-button" disabled="#{!reporteCrudView.hasSelectedReportes()}"
+                                         update="@this">
+                            <p:confirm header="Confirmación" message="Eliminar el reporte seleccionado?"
+                                       icon="pi pi-exclamation-triangle"/>
+                        </p:commandButton>
+                    </div>
+                </div>
+
+                <p:dataTable id="dt-reportes" widgetVar="dtReportes" var="reporte" value="#{reporteCrudView.reportes}"
+                             reflow="true" styleClass="products-table"
+                             selection="#{reporteCrudView.selectedReportes}" rowKey="#{reporte.id}" paginator="true"
+                             rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">REPORTES</span>
+
+                            <span class="filter-container ui-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtReportes').filter()" placeholder="Search"/>
+                    </span>
+
+                        </div>
+                    </f:facet>
+
+                    <p:ajax event="rowSelect" update=":form:delete-reportes-button"/>
+                    <p:ajax event="rowUnselect" update=":form:delete-reportes-button"/>
+                    <p:ajax event="rowSelectCheckbox" update=":form:delete-reportes-button"/>
+                    <p:ajax event="rowUnselectCheckbox" update=":form:delete-reportes-button"/>
+                    <p:ajax event="toggleSelect" update=":form:delete-reportes-button"/>
+
+                    <p:column selectionMode="multiple" exportable="false"></p:column>
+
+                    <p:column headerText="Id" sortBy="#{reporte.id}" filterBy="#{reporte.id}">
+                        <h:outputText value="#{reporte.id}"/>
+                    </p:column>
+                    <p:column headerText="Nombre" sortBy="#{reporte.nombre}" filterBy="#{reporte.nombre}">
+                        <h:outputText value="#{reporte.nombre}"/>
+                    </p:column>
+                    <p:column headerText="Url" sortBy="#{reporte.ubicacion}" filterBy="#{reporte.ubicacion}">
+                        <h:outputText value="#{reporte.ubicacion}"/>
+                    </p:column>
+                    <p:column headerText="U. Creación" sortBy="#{reporte.idUsuarioCreacion}"
+                              filterBy="#{reporte.idUsuarioCreacion}">
+                        <h:outputText value="#{reporte.idUsuarioCreacion}"/>
+                    </p:column>
+                    <p:column headerText="F. Creación" sortBy="#{reporte.fechaCreacion}"
+                              filterBy="#{reporte.fechaCreacion}">
+                        <h:outputText value="#{reporte.fechaCreacion}"/>
+                    </p:column>
+                    <p:column headerText="U. Modificación" sortBy="#{reporte.idUsuarioModificacion}"
+                              filterBy="#{reporte.idUsuarioModificacion}">
+                        <h:outputText value="#{reporte.idUsuarioModificacion}"/>
+                    </p:column>
+                    <p:column headerText="F. Modificación" sortBy="#{reporte.fechaModificacion}"
+                              filterBy="#{reporte.fechaModificacion}">
+                        <h:outputText value="#{reporte.fechaModificacion}"/>
+                    </p:column>
+                    <p:column headerText="Estado" sortBy="#{reporte.estado}"
+                              filterBy="#{reporte.estado}">
+                        <h:outputText value="#{reporte.estado}"/>
+                    </p:column>
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil" update=":form:manage-reporte-content"
+                                         oncomplete="PF('manageReporteDialog').show()"
+                                         styleClass="edit-button rounded-button success-button" process="@this">
+                            <f:setPropertyActionListener value="#{reporte}" target="#{reporteCrudView.selectedReporte}"/>
+                        </p:commandButton>
+                        <p:commandButton class="warning-button rounded-button" icon="pi pi-trash" process="@this"
+                                         oncomplete="PF('deleteReporteDialog').show()">
+                            <f:setPropertyActionListener value="#{reporte}" target="#{reporteCrudView.selectedReporte}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:dialog header="Detalles Reporte" width="450" showEffect="fade" modal="true"
+                          widgetVar="manageReporteDialog" responsive="true">
+                    <p:outputPanel id="manage-reporte-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty reporteCrudView.selectedReporte}">
+                            <div class="p-field">
+                                <p:outputLabel for="nombre">Nombre</p:outputLabel>
+                                <p:inputText id="nombre" value="#{reporteCrudView.selectedReporte.nombre}" required="true"/>
+                            </div>
+                            <div class="p-field">
+                                <p:outputLabel for="ubicacion">Url</p:outputLabel>
+                                <p:inputText id="ubicacion" value="#{reporteCrudView.selectedReporte.ubicacion}" required="true"/>
+                            </div>
+                            <div class="p-field p-col-12 p-md-4">
+                                <p:outputLabel for="estado">Estado</p:outputLabel>
+                                <p:selectOneMenu id="estado" value="#{reporteCrudView.selectedReporte.estado}" required="true" >
+                                    <f:selectItem itemLabel="Inactivo" itemValue="0"/>
+                                    <f:selectItem itemLabel="Activo" itemValue="1"/>
+                                </p:selectOneMenu>
+                            </div>
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{reporteCrudView.save}"
+                                         update="manage-reporte-content" process="manage-reporte-content @this"/>
+                        <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageReporteDialog').hide()"
+                                         class="secondary-button"/>
+                    </f:facet>
+                </p:dialog>
+
+                <p:confirmDialog widgetVar="deleteReporteDialog" showEffect="fade" width="300"
+                                 message="Eliminar el reporte?" header="Confirmación" severity="warn">
+                    <p:commandButton value="Si" icon="pi pi-check" actionListener="#{reporteCrudView.delete}"
+                                     process="@this" oncomplete="PF('deleteReporteDialog').hide()"
+                                     update=":form:delete-reportes-button"/>
+                    <p:commandButton value="No" type="button" styleClass="secondary-button" icon="pi pi-times"
+                                     onclick="PF('deleteReporteDialog').hide()"/>
+                </p:confirmDialog>
+
+                <p:confirmDialog global="true" showEffect="fade" width="300">
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no secondary-button"
+                                     icon="pi pi-times"/>
+                </p:confirmDialog>
+            </div>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
